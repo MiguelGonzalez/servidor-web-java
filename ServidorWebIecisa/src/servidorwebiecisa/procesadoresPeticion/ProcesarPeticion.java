@@ -74,17 +74,6 @@ public class ProcesarPeticion {
             strPeticion.append(new String(datos));
         }
 
-        if(strPeticion.length() < 10) {
-            System.out.println(strPeticion.toString());
-        } else {
-            if(strPeticion.length() == 0) {
-                System.out.println("NO HA ESCRITO NADA EL CLIENTE");
-            } else {
-                System.out.println(strPeticion.substring(0, 10));
-            }
-        }
-        
-        
         return strPeticion;
     }
 }

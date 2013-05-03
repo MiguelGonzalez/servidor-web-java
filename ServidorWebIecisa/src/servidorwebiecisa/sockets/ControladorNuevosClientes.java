@@ -11,6 +11,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import servidorwebiecisa.ConfiguracionServidor;
 import servidorwebiecisa.ServidorWebIecisa;
+import servidorwebiecisa.servidorWeb.IServidorWeb;
 
 /**
  *
@@ -23,15 +24,13 @@ public class ControladorNuevosClientes extends Thread {
     private ExecutorService executorServiceServer;
     private ConfiguracionServidor config = ConfiguracionServidor.getInstance();
     
-    private int aliveTimeOut;
+    private IServidorWeb servidor;
     
 
-    public ControladorNuevosClientes(ServerSocket skServer) {
+    public ControladorNuevosClientes(IServidorWeb servidor, 
+            ServerSocket skServer) {
+        this.servidor = servidor;
         this.skServer = skServer;
-        
-        
-        aliveTimeOut = config.getKeepAliveTimeout();
-        
         executorServiceServer = Executors.newFixedThreadPool(config.getNumPoolSockets());
     }
         
@@ -42,11 +41,11 @@ public class ControladorNuevosClientes extends Thread {
         while(corriendo) {
             try {
                 Socket skClient = skServer.accept();
-                skClient.setSoTimeout(aliveTimeOut);
+                skClient.setSoTimeout(config.getKeepAliveTimeout());
                 
                 
                 ControladorPeticionesCliente controladorCliente =
-                        new ControladorPeticionesCliente(skClient);
+                        new ControladorPeticionesCliente(servidor, skClient);
                 
                 executorServiceServer.execute(controladorCliente);
 

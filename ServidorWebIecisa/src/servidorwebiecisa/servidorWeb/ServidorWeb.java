@@ -4,6 +4,7 @@
  */
 package servidorwebiecisa.servidorWeb;
 
+import java.util.Map;
 import servidorwebiecisa.http.datasInput.Cabecera;
 import servidorwebiecisa.procesadoresPeticion.ProcesarContentTypePeticion;
 import servidorwebiecisa.http.HttpInputStream;
@@ -16,6 +17,10 @@ import servidorwebiecisa.http.datasInput.Formulario;
  */
 public class ServidorWeb extends IServidorWeb {
 
+    public ServidorWeb(Map<String, String> valores) {
+        super(valores);
+    }
+    
     @Override
     public void doPost(HttpInputStream inputStream, HttpOutputStream ouputStream) {
         ProcesarContentTypePeticion procesarContentType = new ProcesarContentTypePeticion();

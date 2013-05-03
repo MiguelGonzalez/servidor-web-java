@@ -14,15 +14,8 @@ import servidorwebiecisa.ServidorWebIecisa;
 import servidorwebiecisa.http.datasInput.Cabecera;
 import servidorwebiecisa.http.HttpInputStream;
 import servidorwebiecisa.http.HttpOutputStream;
-import servidorwebiecisa.http.datasInput.Cookie;
-import servidorwebiecisa.http.datasInput.Formulario;
-import servidorwebiecisa.procesadoresPeticion.ProcesarCabeceraPeticion;
-import servidorwebiecisa.procesadoresPeticion.ProcesarContentTypePeticion;
-import servidorwebiecisa.procesadoresPeticion.ProcesarCookiePeticion;
-import servidorwebiecisa.procesadoresPeticion.ProcesarFormularioPeticion;
 import servidorwebiecisa.procesadoresPeticion.ProcesarPeticion;
 import servidorwebiecisa.servidorWeb.IServidorWeb;
-import servidorwebiecisa.servidorWeb.ServidorWeb;
 
 /**
  *
@@ -37,10 +30,12 @@ public class ControladorPeticionesCliente implements Runnable {
     private DataInputStream streamInput;
     private DataOutputStream streamOuput;
     
-    private IServidorWeb iServidorWeb = null;
     private ProcesarPeticion procesarPeticion;
+    private IServidorWeb servidor;
 
-    public ControladorPeticionesCliente(Socket skClient) throws IOException {
+    public ControladorPeticionesCliente(IServidorWeb servidor,
+            Socket skClient) throws IOException {
+        this.servidor = servidor;
         this.skClient = skClient;
         
         inputStream = this.skClient.getInputStream();
@@ -54,8 +49,6 @@ public class ControladorPeticionesCliente implements Runnable {
     @Override
     public void run() {
         corriendo = true;
-        iServidorWeb = new ServidorWeb();
-        iServidorWeb.init();
         
         while (corriendo) {
             try {
@@ -63,10 +56,14 @@ public class ControladorPeticionesCliente implements Runnable {
                     HttpInputStream input = procesarPeticion.procesarHttpInputStream(streamInput);
                     HttpOutputStream output = procesarPeticion.procesarHttpOuputStream(streamOuput);
                     
-                    if (input.getCabecera().action == Cabecera.ACTION_GET) {
-                        iServidorWeb.doGet(input, output);
-                    } else if (input.getCabecera().action == Cabecera.ACTION_POST) {
-                        iServidorWeb.doPost(input, output);
+                    if(input.getCabecera().recursoSolicitado.contains(servidor.getServicio())) {
+                        if (input.getCabecera().action == Cabecera.ACTION_GET) {
+                            servidor.doGet(input, output);
+                        } else if (input.getCabecera().action == Cabecera.ACTION_POST) {
+                            servidor.doPost(input, output);
+                        }
+                    } else {
+                        servidor.servirEstatico(input, output);
                     }
                 }   
             } catch(IOException ex) {

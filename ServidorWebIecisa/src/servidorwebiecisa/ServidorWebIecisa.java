@@ -3,17 +3,19 @@ package servidorwebiecisa;
 import servidorwebiecisa.sockets.ControladorNuevosClientes;
 import java.io.IOException;
 import java.net.ServerSocket;
+import java.util.ArrayList;
+import java.util.List;
 import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
+import servidorwebiecisa.servidorWeb.IServidorWeb;
 
 public class ServidorWebIecisa {
     
     public final static Logger log = Logger.getLogger("ServidorWebIecisa");
     public static final String VERSION = "0.1";
     
-    private ServerSocket skServer;
-    private int numPuertoServidor = 9090;
-    private int estadoServidor = 0;
+    private List<ServerSocket> skServers;
+    private ConfiguracionServidor configuracion;
     
     
     public static void main(String[] args) {
@@ -29,26 +31,27 @@ public class ServidorWebIecisa {
     }
     
     public ServidorWebIecisa() {
+        configuracion = ConfiguracionServidor.getInstance();
         
+        skServers = new ArrayList<>();
     }
     
     public void start() {
-        estadoServidor = 1;
-        
-        try {
-            skServer = new ServerSocket(numPuertoServidor);
+        for(IServidorWeb servidor : configuracion.getServidores()) {
+            try {
+                System.out.println(servidor.getPort());
+                ServerSocket skServer = new ServerSocket(servidor.getPort());
+                
+                skServers.add(skServer);
+                
+                ControladorNuevosClientes controladorNuevosClientes = new
+                        ControladorNuevosClientes(servidor, skServer);
+                servidor.init();
+                controladorNuevosClientes.empezarAEscuchar();
 
-            ControladorNuevosClientes controladorNuevosClientes = new
-                    ControladorNuevosClientes(skServer);
-            controladorNuevosClientes.empezarAEscuchar();
-            
-        } catch(IOException ex) {
-            ServidorWebIecisa.log.error(ex);
+            } catch(IOException ex) {
+                ServidorWebIecisa.log.error(ex);
+            }
         }
     }
-    
-    public void parar() {
-        estadoServidor = 0;
-    }
-    
 }

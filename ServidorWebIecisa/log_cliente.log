@@ -1881,3 +1881,92 @@
 14:55:42,625  INFO ServidorWebIecisa:28 - Servidor arrancado
 15:24:55,828  INFO ServidorWebIecisa:24 - Versión: 0.1
 15:24:55,843  INFO ServidorWebIecisa:28 - Servidor arrancado
+12:58:19,625  INFO ServidorWebIecisa:24 - Versión: 0.1
+12:58:35,171  INFO ServidorWebIecisa:24 - Versión: 0.1
+12:59:03,359  INFO ServidorWebIecisa:24 - Versión: 0.1
+12:59:16,406  INFO ServidorWebIecisa:24 - Versión: 0.1
+12:59:47,593  INFO ServidorWebIecisa:24 - Versión: 0.1
+14:11:35,500  INFO ServidorWebIecisa:24 - Versión: 0.1
+14:11:38,484  INFO ServidorWebIecisa:24 - Versión: 0.1
+14:12:24,281  INFO ServidorWebIecisa:24 - Versión: 0.1
+14:12:33,546  INFO ServidorWebIecisa:24 - Versión: 0.1
+14:20:23,921  INFO ServidorWebIecisa:24 - Versión: 0.1
+14:25:03,453  INFO ServidorWebIecisa:24 - Versión: 0.1
+14:29:02,093  INFO ServidorWebIecisa:24 - Versión: 0.1
+14:29:11,984  INFO ServidorWebIecisa:24 - Versión: 0.1
+14:30:30,906  INFO ServidorWebIecisa:24 - Versión: 0.1
+15:06:17,671  INFO ServidorWebIecisa:24 - Versión: 0.1
+15:17:27,156  INFO ServidorWebIecisa:24 - Versión: 0.1
+15:19:13,015  INFO ServidorWebIecisa:24 - Versión: 0.1
+15:25:15,093  INFO ServidorWebIecisa:24 - Versión: 0.1
+15:25:25,625  INFO ServidorWebIecisa:24 - Versión: 0.1
+15:25:56,156  INFO ServidorWebIecisa:24 - Versión: 0.1
+15:26:54,718  INFO ServidorWebIecisa:24 - Versión: 0.1
+15:38:32,390  INFO ServidorWebIecisa:26 - Versión: 0.1
+15:38:46,531  INFO ServidorWebIecisa:26 - Versión: 0.1
+15:38:46,734  INFO ServidorWebIecisa:30 - Servidor arrancado
+15:45:14,046  INFO ServidorWebIecisa:24 - Versión: 0.1
+15:45:14,109  INFO ServidorWebIecisa:28 - Servidor arrancado
+15:46:30,906  INFO ServidorWebIecisa:24 - Versión: 0.1
+15:46:30,937  INFO ServidorWebIecisa:28 - Servidor arrancado
+15:47:35,531 ERROR ServidorWebIecisa:79 - java.io.FileNotFoundException: F:\Documents and Settings\Administrator\Desktop\PaginaWeb (Access is denied)
+15:47:35,531 ERROR ServidorWebIecisa:79 - java.io.FileNotFoundException: F:\Documents and Settings\Administrator\Desktop\PaginaWeb (Access is denied)
+15:47:35,546 ERROR ServidorWebIecisa:79 - java.io.FileNotFoundException: F:\Documents and Settings\Administrator\Desktop\PaginaWeb (Access is denied)
+15:47:35,937 ERROR ServidorWebIecisa:79 - java.io.FileNotFoundException: F:\Documents and Settings\Administrator\Desktop\PaginaWeb (Access is denied)
+15:49:53,484 ERROR ServidorWebIecisa:71 - java.net.SocketTimeoutException: Read timed out
+15:49:53,953 ERROR ServidorWebIecisa:71 - java.net.SocketTimeoutException: Read timed out
+15:49:53,968 ERROR ServidorWebIecisa:71 - java.net.SocketTimeoutException: Read timed out
+15:49:54,343 ERROR ServidorWebIecisa:71 - java.net.SocketTimeoutException: Read timed out
+15:50:28,593  INFO ServidorWebIecisa:24 - Versión: 0.1
+15:50:28,656  INFO ServidorWebIecisa:28 - Servidor arrancado
+15:51:22,015  INFO ServidorWebIecisa:24 - Versión: 0.1
+15:51:22,062  INFO ServidorWebIecisa:28 - Servidor arrancado
+15:51:35,734 ERROR ServidorWebIecisa:79 - java.io.FileNotFoundException: F:\Documents and Settings\Administrator\Desktop\PaginaWeb (Access is denied)
+15:53:02,828  INFO ServidorWebIecisa:24 - Versión: 0.1
+15:53:02,890  INFO ServidorWebIecisa:28 - Servidor arrancado
+15:54:18,187  INFO ServidorWebIecisa:26 - Versión: 0.1
+15:54:18,234  INFO ServidorWebIecisa:30 - Servidor arrancado
+15:54:51,734  INFO ServidorWebIecisa:26 - Versión: 0.1
+15:54:51,796  INFO ServidorWebIecisa:30 - Servidor arrancado
+15:55:17,656  INFO ServidorWebIecisa:26 - Versión: 0.1
+15:55:17,703  INFO ServidorWebIecisa:30 - Servidor arrancado
+15:55:31,562  INFO ServidorWebIecisa:26 - Versión: 0.1
+15:55:31,593  INFO ServidorWebIecisa:30 - Servidor arrancado
+15:55:44,015  INFO ServidorWebIecisa:26 - Versión: 0.1
+15:55:44,046  INFO ServidorWebIecisa:30 - Servidor arrancado
+15:56:16,500  INFO ServidorWebIecisa:26 - Versión: 0.1
+15:56:16,546  INFO ServidorWebIecisa:30 - Servidor arrancado
+15:56:25,609  INFO ServidorWebIecisa:26 - Versión: 0.1
+15:56:25,656  INFO ServidorWebIecisa:30 - Servidor arrancado
+15:56:40,421  INFO ServidorWebIecisa:26 - Versión: 0.1
+15:56:40,484  INFO ServidorWebIecisa:30 - Servidor arrancado
+15:59:51,765  INFO ServidorWebIecisa:26 - Versión: 0.1
+15:59:51,843 ERROR ServidorWebIecisa:53 - java.net.BindException: Address already in use: JVM_Bind
+15:59:51,843 ERROR ServidorWebIecisa:53 - java.net.BindException: Address already in use: JVM_Bind
+15:59:51,843  INFO ServidorWebIecisa:30 - Servidor arrancado
+16:00:09,781  INFO ServidorWebIecisa:26 - Versión: 0.1
+16:00:09,828  INFO ServidorWebIecisa:30 - Servidor arrancado
+16:01:05,093  INFO ServidorWebIecisa:26 - Versión: 0.1
+16:01:05,156  INFO ServidorWebIecisa:30 - Servidor arrancado
+16:01:56,640  INFO ServidorWebIecisa:26 - Versión: 0.1
+16:01:56,718  INFO ServidorWebIecisa:30 - Servidor arrancado
+16:02:49,703  INFO ServidorWebIecisa:26 - Versión: 0.1
+16:02:49,734  INFO ServidorWebIecisa:30 - Servidor arrancado
+16:03:55,437 ERROR ServidorWebIecisa:72 - java.net.SocketTimeoutException: Read timed out
+16:03:55,828 ERROR ServidorWebIecisa:72 - java.net.SocketTimeoutException: Read timed out
+16:03:55,937 ERROR ServidorWebIecisa:72 - java.net.SocketTimeoutException: Read timed out
+16:03:55,937 ERROR ServidorWebIecisa:72 - java.net.SocketTimeoutException: Read timed out
+16:04:02,171  INFO ServidorWebIecisa:26 - Versión: 0.1
+16:04:02,218  INFO ServidorWebIecisa:30 - Servidor arrancado
+16:04:22,718  INFO ServidorWebIecisa:26 - Versión: 0.1
+16:04:22,750 ERROR ServidorWebIecisa:53 - java.net.BindException: Address already in use: JVM_Bind
+16:04:22,750 ERROR ServidorWebIecisa:53 - java.net.BindException: Address already in use: JVM_Bind
+16:04:22,750  INFO ServidorWebIecisa:30 - Servidor arrancado
+16:05:27,859 ERROR ServidorWebIecisa:71 - java.net.SocketTimeoutException: Read timed out
+16:05:27,859 ERROR ServidorWebIecisa:71 - java.net.SocketTimeoutException: Read timed out
+16:05:28,359 ERROR ServidorWebIecisa:71 - java.net.SocketTimeoutException: Read timed out
+16:05:30,171 ERROR ServidorWebIecisa:71 - java.net.SocketTimeoutException: Read timed out
+16:05:30,546 ERROR ServidorWebIecisa:71 - java.net.SocketTimeoutException: Read timed out
+16:05:30,671 ERROR ServidorWebIecisa:71 - java.net.SocketTimeoutException: Read timed out
+16:05:30,671 ERROR ServidorWebIecisa:71 - java.net.SocketTimeoutException: Read timed out
+16:05:36,140 ERROR ServidorWebIecisa:71 - java.net.SocketTimeoutException: Read timed out

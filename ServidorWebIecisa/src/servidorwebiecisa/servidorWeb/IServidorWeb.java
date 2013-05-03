@@ -9,24 +9,57 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import servidorwebiecisa.ConfiguracionServidor;
+import java.util.Map;
 import servidorwebiecisa.ServidorWebIecisa;
 import servidorwebiecisa.http.HttpInputStream;
 import servidorwebiecisa.http.HttpOutputStream;
+import servidorwebiecisa.http.datasInput.Cabecera;
 
 public abstract class IServidorWeb {
     public abstract void init();
     public abstract void doPost(HttpInputStream inputStream, HttpOutputStream ouputStream);
     public abstract void doGet(HttpInputStream inputStream, HttpOutputStream ouputStream);
     
-    public static String PATH_INI;
+    public String PATH_INI;
     
-    private ConfiguracionServidor configuracionServidor;
+    private Map<String, String> valores;
     
-    public IServidorWeb() {
-        configuracionServidor = ConfiguracionServidor.getInstance();
+    public IServidorWeb(Map<String, String> valores) {
+        this.valores = valores;
         
-        PATH_INI = configuracionServidor.getPathIni();
+        PATH_INI = valores.get("path");
+    }
+    
+    public int getPort() {
+        String port = valores.get("port");
+        
+        return Integer.parseInt(port);
+    }
+    
+    public String getServicio() {
+        String servicio = valores.get("servicio");
+        
+        return servicio;
+    }
+    
+    public final void servirEstatico(HttpInputStream inputStream, HttpOutputStream ouputStream) {
+        System.out.println("Servido estático");
+        Cabecera cabeceraPeticion = inputStream.getCabecera();
+
+        String recursoSolicitado = cabeceraPeticion.recursoSolicitado;
+        if(existeRecursoSolicitado(recursoSolicitado)) {
+            ouputStream.writeResponse(
+                    getContenidoPagina(recursoSolicitado));
+        } else {
+            byte[] error404;
+            if(existeRecursoSolicitado(recursoSolicitado)) {
+                error404 = getContenidoPagina("error404.htm");
+            } else {
+                error404 = "<h1>Error 404 - El recurso solicitado no existe".getBytes();
+            }
+            
+            ouputStream.writeError(error404);
+        }
     }
     
     public byte[] getContenidoPagina(String recursoSolicitado) {
@@ -58,8 +91,6 @@ public abstract class IServidorWeb {
             return fileContent;
         }
     }
-    
-    
     
     public boolean existeRecursoSolicitado(String recursoSolicitado) {
         return new File(PATH_INI, recursoSolicitado).exists();
