@@ -6,8 +6,8 @@ package servidorwebiecisa;
 
 import java.io.File;
 import java.io.IOException;
+import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLClassLoader;
@@ -28,7 +28,7 @@ import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 import static servidorwebiecisa.ServidorWebIecisa.log;
 import servidorwebiecisa.servidorWeb.IServidorWeb;
-import servidorwebiecisa.servidorWeb.ServidorWeb;
+import servidorwebiecisa.servidorWeb.ServidorWebDefault;
 
 public class ConfiguracionServidor {
     
@@ -77,7 +77,6 @@ public class ConfiguracionServidor {
                 if(childServidor != null) {
                     NodeList listServidores = childServidor.getChildNodes();
                     
-                    
                     for(int i=0; i<listServidores.getLength(); i++) {
                         Node servidor = listServidores.item(i);
                         Map<String, String> valoresServidor = new HashMap<>();
@@ -104,69 +103,40 @@ public class ConfiguracionServidor {
     }
     
     private void addServidor(Map<String, String> valoresServidor) {
-        
-        String jarServicio = valoresServidor.get("jarServicio");
+        String pathRelativeServicio = valoresServidor.get("pathRelativeServicio");
         String classServicio = valoresServidor.get("classServicio");
         
-        if(jarServicio != null && classServicio != null) {
+        if(pathRelativeServicio != null && classServicio != null) {
             try {
-               // URLClassLoader classLoader = ((URLClassLoader) ClassLoader.
-                //        getSystemClassLoader());
                 
-                //Method methodAdd = URLClassLoader.class.getDeclaredMethod("addURL",
-                //        new Class[]{URL.class});
-
-                
-                System.out.println(jarServicio);
-                File fileJar = new File(jarServicio);
-                
-                URL urlJar = new URL("file://" + fileJar.toURI().getPath());
-                
-                System.out.println("Nombre de la clase: " + classServicio);
-                URLClassLoader child = new URLClassLoader (new URL[]{urlJar}, this.getClass().getClassLoader());
-                Class classToLoad = Class.forName(classServicio, true, child);
-                //Method method = classToLoad.getDeclaredMethod ("myMethod");
-                IServidorWeb servidorWeb = IServidorWeb.class.cast(classToLoad.newInstance());
-                //Object result = method.invoke (instance);
-                
-                
-                
-                
-
-                //methodAdd.invoke(classLoader, new Object[] { url} );
-                //methodAdd.setAccessible(true);
-                /*
-                URLClassLoader loader = new URLClassLoader(new URL[]{url}, null);
-                
-                
-                
-                
-                
-                IServidorWeb servidorWeb = IServidorWeb.class.cast(Class.forName(classServicio, true, loader));*/
+               Class<?> classServidor = Class.forName(classServicio);
+               Class[] ctorArgs = new Class[1];
+               ctorArgs[0] = valoresServidor.getClass();
+               Constructor<?> constructor = classServidor.getConstructor(ctorArgs);
+               
+               
+               
+               IServidorWeb servidorWeb = (IServidorWeb) classServidor.cast(
+                       constructor.newInstance(valoresServidor));
                 
                 servidores.add(servidorWeb);
-                
-                System.out.println("Servidor cargado dinámicamente");
-            
-            } catch (SecurityException ex) {
-                log.error(ex);
-            
-            } catch (IllegalArgumentException ex) {
-                log.error(ex);
-            
-            } catch (ClassNotFoundException ex) {
-                log.error(ex);
-            } catch (MalformedURLException ex) {
-                Logger.getLogger(ConfiguracionServidor.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (IOException ex) {
-                Logger.getLogger(ConfiguracionServidor.class.getName()).log(Level.SEVERE, null, ex);
             } catch (InstantiationException ex) {
-                Logger.getLogger(ConfiguracionServidor.class.getName()).log(Level.SEVERE, null, ex);
+                ServidorWebIecisa.log.error("", ex);
             } catch (IllegalAccessException ex) {
-                Logger.getLogger(ConfiguracionServidor.class.getName()).log(Level.SEVERE, null, ex);
+                ServidorWebIecisa.log.error("", ex);
+            } catch (NoSuchMethodException ex) {
+                ServidorWebIecisa.log.error("", ex);
+            } catch (SecurityException ex) {
+                ServidorWebIecisa.log.error("", ex);
+            } catch (IllegalArgumentException ex) {
+                ServidorWebIecisa.log.error("", ex);
+            } catch (InvocationTargetException ex) {
+                ServidorWebIecisa.log.error("", ex);
+            } catch (ClassNotFoundException ex) {
+                ServidorWebIecisa.log.error("", ex);
             }
         } else {
-            servidores.add(new ServidorWeb(valoresServidor));
+            servidores.add(new ServidorWebDefault(valoresServidor));
         }
     }
     

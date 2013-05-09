@@ -8,7 +8,6 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.util.Map;
 import servidorwebiecisa.ServidorWebIecisa;
 import servidorwebiecisa.http.HttpInputStream;
@@ -37,9 +36,18 @@ public abstract class IServidorWeb {
     }
     
     public String getServicio() {
-        String servicio = valores.get("servicio");
-        
-        return servicio;
+        String pathServicio = valores.get("pathRelativeServicio");
+        if(pathServicio == null) {
+            return "";
+        }
+        if(pathServicio.length() > 0 && pathServicio.startsWith("/")) {
+            pathServicio = pathServicio.substring(1);
+        }
+        if(pathServicio.length() > 0 && pathServicio.endsWith("/")) {
+            pathServicio = pathServicio.substring(0, pathServicio.length() - 1);
+        }
+
+        return pathServicio;
     }
     
     public String getConfiguracion(String data) {
@@ -47,10 +55,13 @@ public abstract class IServidorWeb {
     }
     
     public final void servirEstatico(HttpInputStream inputStream, HttpOutputStream ouputStream) {
-        System.out.println("Servido estático");
         Cabecera cabeceraPeticion = inputStream.getCabecera();
-
+        
+        
+        System.out.println("Servido estático" + cabeceraPeticion.recursoSolicitado);
+        
         String recursoSolicitado = cabeceraPeticion.recursoSolicitado;
+        
         if(existeRecursoSolicitado(recursoSolicitado)) {
             ouputStream.writeResponse(
                     getContenidoPagina(recursoSolicitado));
@@ -72,7 +83,6 @@ public abstract class IServidorWeb {
         
         if(fileRecurso.exists()) {
             FileInputStream  fis = null;
-            InputStreamReader isr = null;
             
             try {
                 fis = new FileInputStream(fileRecurso);
@@ -85,7 +95,9 @@ public abstract class IServidorWeb {
                 ServidorWebIecisa.log.error(ex);
             } finally {
                 try {
-                    fis.close();
+                    if(fis != null) {
+                        fis.close();
+                    }
                 } catch (IOException ex) {
                     ServidorWebIecisa.log.error(ex);
                 }

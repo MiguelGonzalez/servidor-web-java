@@ -3,6 +3,7 @@ package servidorwebiecisa.procesadoresPeticion;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
+import java.util.List;
 import servidorwebiecisa.ServidorWebIecisa;
 import servidorwebiecisa.http.HttpInputStream;
 import servidorwebiecisa.http.HttpOutputStream;
@@ -26,17 +27,17 @@ public class ProcesarPeticion {
     
     private Cabecera cabeceraPeticion;
     private Formulario formularioPeticion;
-    private Cookie cookiePeticion;
+    private List<Cookie> cookiesPeticion;
     
     public HttpInputStream procesarHttpInputStream(DataInputStream streamInput) throws IOException {
         StringBuilder strPeticionCliente = getPeticionCliente(streamInput);
         
         cabeceraPeticion = procesarCabeceraPeticion.getCabecera(strPeticionCliente.toString());
         formularioPeticion = procesarFormularioPeticion.getFormulario(strPeticionCliente.toString());
-        cookiePeticion = procesarCookiePeticion.getCookie(strPeticionCliente.toString());
+        cookiesPeticion = procesarCookiePeticion.getCookie(strPeticionCliente.toString());
 
         return new HttpInputStream(cabeceraPeticion,
-                formularioPeticion, cookiePeticion);
+                formularioPeticion, cookiesPeticion);
     }
     
     public HttpOutputStream procesarHttpOuputStream(DataOutputStream streamOuput) {

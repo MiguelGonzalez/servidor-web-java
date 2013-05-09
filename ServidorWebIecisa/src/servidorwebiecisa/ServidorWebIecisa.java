@@ -2,14 +2,9 @@ package servidorwebiecisa;
 
 import servidorwebiecisa.sockets.ControladorNuevosClientes;
 import java.io.IOException;
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
 import java.net.ServerSocket;
-import java.net.URL;
-import java.net.URLClassLoader;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
 import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
 import servidorwebiecisa.servidorWeb.IServidorWeb;
@@ -44,7 +39,17 @@ public class ServidorWebIecisa {
     public void start() {
         for(IServidorWeb servidor : configuracion.getServidores()) {
             try {
-                ServerSocket skServer = new ServerSocket(servidor.getPort());
+                String pathServicio = servidor.getConfiguracion("pathServicio");
+                String classServicio = servidor.getConfiguracion("classServicio");
+                
+                ServerSocket skServer;
+                
+                if(pathServicio != null && classServicio != null &&
+                        !pathServicio.isEmpty() && !classServicio.isEmpty()) {
+                    skServer = new ServerSocket(servidor.getPort());
+                } else {
+                    skServer = new ServerSocket(servidor.getPort());
+                }
                 
                 skServers.add(skServer);
                 
@@ -54,7 +59,7 @@ public class ServidorWebIecisa {
                 controladorNuevosClientes.empezarAEscuchar();
 
             } catch(IOException ex) {
-                ServidorWebIecisa.log.error(ex);
+                ServidorWebIecisa.log.error("", ex);
             }
         }
     }

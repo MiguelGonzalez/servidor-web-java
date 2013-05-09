@@ -69,27 +69,27 @@ public class ControladorPeticionesCliente implements Runnable {
                 }   
             } catch(IOException ex) {
                 corriendo = false;
-                ServidorWebIecisa.log.error(ex);
+                ServidorWebIecisa.log.error("", ex);
             }
             try {
                 streamInput.close();
             } catch (IOException ex) {
-                ServidorWebIecisa.log.error(ex);
+                ServidorWebIecisa.log.error("", ex);
             }
             try {
                 inputStream.close();
             } catch (IOException ex) {
-                ServidorWebIecisa.log.error(ex);
+                ServidorWebIecisa.log.error("", ex);
             }
             try {
                 streamOuput.close();
             } catch (IOException ex) {
-                ServidorWebIecisa.log.error(ex);
+                ServidorWebIecisa.log.error("", ex);
             }
             try {
                 outputStream.close();
             } catch (IOException ex) {
-                ServidorWebIecisa.log.error(ex);
+                ServidorWebIecisa.log.error("", ex);
             }
 
             corriendo = false;

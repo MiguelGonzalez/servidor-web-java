@@ -48,10 +48,8 @@ public class ControladorNuevosClientes extends Thread {
                         new ControladorPeticionesCliente(servidor, skClient);
                 
                 executorServiceServer.execute(controladorCliente);
-
-                System.out.println("Aceptado nuevo cliente");
             } catch (IOException ex) {
-                ServidorWebIecisa.log.error(ex);
+                ServidorWebIecisa.log.error("", ex);
             }
         }
         executorServiceServer.shutdownNow();

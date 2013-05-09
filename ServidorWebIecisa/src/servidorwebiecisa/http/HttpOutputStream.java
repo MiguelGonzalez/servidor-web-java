@@ -7,8 +7,11 @@ package servidorwebiecisa.http;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import servidorwebiecisa.ServidorWebIecisa;
+import servidorwebiecisa.http.datasInput.Cookie;
 
 /**
  *
@@ -20,12 +23,14 @@ public class HttpOutputStream {
     private String contentTypeDefault;
     
     private boolean escritaCabecera = false;
+    private List<Cookie> cookiesEnviar;
     
     public HttpOutputStream(DataOutputStream streamOutput, String contentTypeDefault) {
         this.streamOutput = streamOutput;
         this.contentTypeDefault = contentTypeDefault;
         
-        parserDate = new SimpleDateFormat("EEE, d MMM yyyy HH:mm:ss");        
+        parserDate = new SimpleDateFormat("EEE, d MMM yyyy HH:mm:ss");
+        cookiesEnviar = new ArrayList<Cookie>();
     }
     
     public DataOutputStream getDataOuputStream() {
@@ -49,6 +54,9 @@ public class HttpOutputStream {
             streamOutput.writeBytes("Server: Apache/0.8.4\r\n");
             streamOutput.writeBytes("Connection: Keep-Alive\r\n");
             streamOutput.writeBytes("Content-Type: " + contentTypeDefault + "\r\n");
+            for(Cookie cookie : cookiesEnviar) {
+                streamOutput.writeBytes("Set-Cookie: " + cookie.nameCookie + "=" + cookie.valueCookie + "\r\n");
+            }
         } catch (IOException ex) {
             ServidorWebIecisa.log.error(ex);
         }
@@ -62,6 +70,9 @@ public class HttpOutputStream {
             streamOutput.writeBytes("Server: Apache/0.8.4\r\n");
             streamOutput.writeBytes("Connection: Keep-Alive\r\n");
             streamOutput.writeBytes("Content-Type: " + contentType + "\r\n");
+            for(Cookie cookie : cookiesEnviar) {
+                streamOutput.writeBytes("Set-Cookie: " + cookie.nameCookie + "=" + cookie.valueCookie + "\r\n");
+            }
         } catch (IOException ex) {
             ServidorWebIecisa.log.error(ex);
         }
@@ -88,5 +99,11 @@ public class HttpOutputStream {
         }
         
         writeResponse(response);
+    }
+    
+    
+    
+    public void establecerCookie(Cookie cookie) {
+        cookiesEnviar.add(cookie);
     }
 }

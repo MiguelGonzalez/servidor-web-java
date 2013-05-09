@@ -17,6 +17,17 @@ public class ProcesarCabeceraPeticion  {
         return procesarDatosCabecera(datosCabeceraFilas);
     }
     
+    private String formatearRecursoSolicitado(String recursoSolicitado) {
+        if(recursoSolicitado.equals("/")) {
+            recursoSolicitado = "/index.htm";
+        }
+        if(recursoSolicitado.endsWith("/")) {
+            recursoSolicitado += "index.htm";
+        }
+        
+        return recursoSolicitado;
+    }
+    
     protected Cabecera procesarDatosCabecera(String[] datosCabeceraFilas) {
         Cabecera cabecera = new Cabecera();
         
@@ -32,9 +43,8 @@ public class ProcesarCabeceraPeticion  {
                 int inicioProtocolo = restoLinea.indexOf("HTTP");
                 String recursoSolicitado = restoLinea.substring(0, inicioProtocolo - 1);
 
-                if(recursoSolicitado.equals("/")) {
-                    recursoSolicitado = "/index.htm";
-                }
+                recursoSolicitado = formatearRecursoSolicitado(recursoSolicitado);
+                
                 cabecera.recursoSolicitado = recursoSolicitado;
 
                 cabecera.protocoloHtpp = restoLinea.substring(inicioProtocolo, restoLinea.length() - 1);
@@ -45,9 +55,7 @@ public class ProcesarCabeceraPeticion  {
                 int inicioProtocolo = restoLinea.indexOf("HTTP");
                 String recursoSolicitado = restoLinea.substring(0, inicioProtocolo - 1);
 
-                if(recursoSolicitado.equals("/")) {
-                    recursoSolicitado = "/index.htm";
-                }
+                recursoSolicitado = formatearRecursoSolicitado(recursoSolicitado);
 
                 cabecera.recursoSolicitado = recursoSolicitado;
 
