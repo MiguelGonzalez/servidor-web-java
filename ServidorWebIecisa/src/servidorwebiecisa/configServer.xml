@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<configuracion>
+    <numPoolSockets>32</numPoolSockets>
+    
+    <keepAliveTimeOut>60</keepAliveTimeOut>
+    
+    <servidores>
+        
+        <servidor>
+            <port>9090</port>
+            <path>F:/Documents and Settings/Administrator/Desktop/PaginaWeb/</path>
+            <servicio>server/</servicio>
+            <jarServicio>F:/Documents and Settings/Administrator/Desktop/PaginaWeb/</jarServicio>
+            <classServicio>servidorwebnoticias/ServidorWebNoticias.class</classServicio>
+        </servidor>
+        
+        <servidor>
+            <port>8080</port>
+            <path>F:/Documents and Settings/Administrator/Desktop/PaginaWeb8080/</path>
+        </servidor>
+    </servidores>
+</configuracion>

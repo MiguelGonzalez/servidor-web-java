@@ -4,12 +4,19 @@
  */
 package servidorwebiecisa;
 
+import java.io.File;
 import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+import java.net.MalformedURLException;
 import java.net.URL;
+import java.net.URLClassLoader;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
@@ -19,6 +26,7 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
+import static servidorwebiecisa.ServidorWebIecisa.log;
 import servidorwebiecisa.servidorWeb.IServidorWeb;
 import servidorwebiecisa.servidorWeb.ServidorWeb;
 
@@ -84,14 +92,81 @@ public class ConfiguracionServidor {
                                             atributo.getTextContent());
                                 }
                             }
-                            System.out.println(valoresServidor.get("path"));
-                            servidores.add(new ServidorWeb(valoresServidor));
+                            
+                            addServidor(valoresServidor);
                         }
                     }
                 }
             }
         } catch (ParserConfigurationException | IOException | SAXException | DOMException ex) {
             ServidorWebIecisa.log.error("Error", ex);
+        }
+    }
+    
+    private void addServidor(Map<String, String> valoresServidor) {
+        
+        String jarServicio = valoresServidor.get("jarServicio");
+        String classServicio = valoresServidor.get("classServicio");
+        
+        if(jarServicio != null && classServicio != null) {
+            try {
+               // URLClassLoader classLoader = ((URLClassLoader) ClassLoader.
+                //        getSystemClassLoader());
+                
+                //Method methodAdd = URLClassLoader.class.getDeclaredMethod("addURL",
+                //        new Class[]{URL.class});
+
+                
+                System.out.println(jarServicio);
+                File fileJar = new File(jarServicio);
+                
+                URL urlJar = new URL("file://" + fileJar.toURI().getPath());
+                
+                System.out.println("Nombre de la clase: " + classServicio);
+                URLClassLoader child = new URLClassLoader (new URL[]{urlJar}, this.getClass().getClassLoader());
+                Class classToLoad = Class.forName(classServicio, true, child);
+                //Method method = classToLoad.getDeclaredMethod ("myMethod");
+                IServidorWeb servidorWeb = IServidorWeb.class.cast(classToLoad.newInstance());
+                //Object result = method.invoke (instance);
+                
+                
+                
+                
+
+                //methodAdd.invoke(classLoader, new Object[] { url} );
+                //methodAdd.setAccessible(true);
+                /*
+                URLClassLoader loader = new URLClassLoader(new URL[]{url}, null);
+                
+                
+                
+                
+                
+                IServidorWeb servidorWeb = IServidorWeb.class.cast(Class.forName(classServicio, true, loader));*/
+                
+                servidores.add(servidorWeb);
+                
+                System.out.println("Servidor cargado dinámicamente");
+            
+            } catch (SecurityException ex) {
+                log.error(ex);
+            
+            } catch (IllegalArgumentException ex) {
+                log.error(ex);
+            
+            } catch (ClassNotFoundException ex) {
+                log.error(ex);
+            } catch (MalformedURLException ex) {
+                Logger.getLogger(ConfiguracionServidor.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (IOException ex) {
+                Logger.getLogger(ConfiguracionServidor.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (InstantiationException ex) {
+                Logger.getLogger(ConfiguracionServidor.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (IllegalAccessException ex) {
+                Logger.getLogger(ConfiguracionServidor.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        } else {
+            servidores.add(new ServidorWeb(valoresServidor));
         }
     }
     

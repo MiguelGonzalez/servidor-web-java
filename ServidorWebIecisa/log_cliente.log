@@ -1970,3 +1970,112 @@
 16:05:30,671 ERROR ServidorWebIecisa:71 - java.net.SocketTimeoutException: Read timed out
 16:05:30,671 ERROR ServidorWebIecisa:71 - java.net.SocketTimeoutException: Read timed out
 16:05:36,140 ERROR ServidorWebIecisa:71 - java.net.SocketTimeoutException: Read timed out
+16:53:53,578  INFO ServidorWebIecisa:31 - Versión: 0.1
+16:53:53,812  INFO ServidorWebIecisa:35 - Servidor arrancado
+16:54:09,343  INFO ServidorWebIecisa:31 - Versión: 0.1
+16:54:09,406  INFO ServidorWebIecisa:35 - Servidor arrancado
+16:55:24,421  INFO ServidorWebIecisa:31 - Versión: 0.1
+16:55:24,484  INFO ServidorWebIecisa:35 - Servidor arrancado
+16:56:04,484  INFO ServidorWebIecisa:31 - Versión: 0.1
+16:56:04,531  INFO ServidorWebIecisa:35 - Servidor arrancado
+16:57:14,328  INFO ServidorWebIecisa:31 - Versión: 0.1
+16:57:14,359 ERROR ServidorWebIecisa:136 - java.lang.IllegalAccessException: Class servidorwebiecisa.ConfiguracionServidor can not access a member of class java.net.URLClassLoader with modifiers "protected"
+16:57:14,375  INFO ServidorWebIecisa:35 - Servidor arrancado
+16:57:51,593  INFO ServidorWebIecisa:31 - Versión: 0.1
+16:57:51,625 ERROR ServidorWebIecisa:137 - java.lang.IllegalAccessException: Class servidorwebiecisa.ConfiguracionServidor can not access a member of class java.net.URLClassLoader with modifiers "protected"
+16:57:51,640  INFO ServidorWebIecisa:35 - Servidor arrancado
+16:58:04,968  INFO ServidorWebIecisa:31 - Versión: 0.1
+16:58:05,031  INFO ServidorWebIecisa:35 - Servidor arrancado
+16:59:57,140  INFO ServidorWebIecisa:31 - Versión: 0.1
+17:03:11,156  INFO ServidorWebIecisa:31 - Versión: 0.1
+17:03:11,218  INFO ServidorWebIecisa:35 - Servidor arrancado
+17:10:06,984  INFO ServidorWebIecisa:31 - Versión: 0.1
+17:10:07,031 ERROR ServidorWebIecisa:144 - java.lang.ClassNotFoundException: servidorwebnoticias.ServidorWebNoticias
+17:10:07,031 ERROR ServidorWebIecisa:57 - java.net.BindException: Address already in use: JVM_Bind
+17:10:07,031  INFO ServidorWebIecisa:35 - Servidor arrancado
+17:10:21,734  INFO ServidorWebIecisa:31 - Versión: 0.1
+17:10:21,765 ERROR ServidorWebIecisa:144 - java.lang.ClassNotFoundException: ServidorWebNoticias
+17:10:21,781  INFO ServidorWebIecisa:35 - Servidor arrancado
+17:10:51,703  INFO ServidorWebIecisa:31 - Versión: 0.1
+17:10:51,765 ERROR ServidorWebIecisa:144 - java.lang.ClassNotFoundException: servidorwebnoticias.ServidorWebNoticias
+17:10:51,781  INFO ServidorWebIecisa:35 - Servidor arrancado
+17:13:22,437  INFO ServidorWebIecisa:31 - Versión: 0.1
+17:13:22,453 ERROR ServidorWebIecisa:146 - java.lang.ClassNotFoundException: servidorwebnoticias.ServidorWebNoticias
+17:13:22,468  INFO ServidorWebIecisa:35 - Servidor arrancado
+17:14:13,968  INFO ServidorWebIecisa:31 - Versión: 0.1
+17:14:14,031 ERROR ServidorWebIecisa:146 - java.lang.ClassNotFoundException: Servidorwebnoticias.ServidorWebNoticias
+17:14:14,062  INFO ServidorWebIecisa:35 - Servidor arrancado
+17:28:03,453  INFO ServidorWebIecisa:31 - Versión: 0.1
+17:28:03,500 ERROR ServidorWebIecisa:145 - java.lang.ClassNotFoundException: servidorwebnoticias.ServidorWebNoticias
+17:28:03,515 ERROR ServidorWebIecisa:57 - java.net.BindException: Address already in use: JVM_Bind
+17:28:03,515  INFO ServidorWebIecisa:35 - Servidor arrancado
+17:29:24,625  INFO ServidorWebIecisa:31 - Versión: 0.1
+17:29:24,703 ERROR ServidorWebIecisa:145 - java.lang.ClassNotFoundException: servidorwebnoticias.ServidorWebNoticias.class
+17:29:24,718  INFO ServidorWebIecisa:35 - Servidor arrancado
+17:29:39,484  INFO ServidorWebIecisa:31 - Versión: 0.1
+17:29:39,515 ERROR ServidorWebIecisa:145 - java.lang.ClassNotFoundException: servidorwebnoticias/ServidorWebNoticias
+17:29:39,515  INFO ServidorWebIecisa:35 - Servidor arrancado
+17:31:09,250  INFO ServidorWebIecisa:31 - Versión: 0.1
+17:31:09,312 ERROR ServidorWebIecisa:145 - java.lang.ClassNotFoundException: servidorwebnoticias.ServidorWebNoticias.class
+17:31:09,328  INFO ServidorWebIecisa:35 - Servidor arrancado
+17:33:59,343  INFO ServidorWebIecisa:31 - Versión: 0.1
+17:33:59,390 ERROR ServidorWebIecisa:145 - java.lang.ClassNotFoundException: servidorwebnoticias.ServidorWebNoticias.ServidorWebNoticias
+17:33:59,406  INFO ServidorWebIecisa:35 - Servidor arrancado
+17:34:08,187  INFO ServidorWebIecisa:31 - Versión: 0.1
+17:34:08,218 ERROR ServidorWebIecisa:145 - java.lang.ClassNotFoundException: servidorwebnoticias.ServidorWebNoticias
+17:34:08,234  INFO ServidorWebIecisa:35 - Servidor arrancado
+17:34:36,625  INFO ServidorWebIecisa:31 - Versión: 0.1
+17:34:36,656 ERROR ServidorWebIecisa:146 - java.lang.ClassNotFoundException: servidorwebnoticias.ServidorWebNoticias
+17:34:36,671  INFO ServidorWebIecisa:35 - Servidor arrancado
+17:34:46,046  INFO ServidorWebIecisa:31 - Versión: 0.1
+17:34:46,078 ERROR ServidorWebIecisa:148 - java.lang.ClassNotFoundException: servidorwebnoticias.ServidorWebNoticias
+17:34:46,078  INFO ServidorWebIecisa:35 - Servidor arrancado
+17:37:41,546  INFO ServidorWebIecisa:31 - Versión: 0.1
+17:37:41,578 ERROR ServidorWebIecisa:148 - java.lang.ClassNotFoundException: servidorwebnoticias.ServidorWebNoticias
+17:37:41,593  INFO ServidorWebIecisa:35 - Servidor arrancado
+17:38:15,593  INFO ServidorWebIecisa:31 - Versión: 0.1
+17:38:15,656 ERROR ServidorWebIecisa:145 - java.lang.ClassNotFoundException: servidorwebnoticias.ServidorWebNoticias
+17:38:15,656  INFO ServidorWebIecisa:35 - Servidor arrancado
+17:57:21,437  INFO ServidorWebIecisa:31 - Versión: 0.1
+17:57:21,484 ERROR ServidorWebIecisa:148 - java.lang.ClassNotFoundException: ServidorWebNoticias
+17:57:21,484 ERROR ServidorWebIecisa:57 - java.net.BindException: Address already in use: JVM_Bind
+17:57:21,484  INFO ServidorWebIecisa:35 - Servidor arrancado
+17:57:52,453  INFO ServidorWebIecisa:31 - Versión: 0.1
+17:57:52,484 ERROR ServidorWebIecisa:148 - java.lang.ClassNotFoundException: ServidorWebNoticias
+17:57:52,484 ERROR ServidorWebIecisa:57 - java.net.BindException: Address already in use: JVM_Bind
+17:57:52,484  INFO ServidorWebIecisa:35 - Servidor arrancado
+17:57:59,468  INFO ServidorWebIecisa:31 - Versión: 0.1
+17:57:59,500 ERROR ServidorWebIecisa:148 - java.lang.ClassNotFoundException: servidorwebnoticias.ServidorWebNoticias
+17:57:59,515 ERROR ServidorWebIecisa:57 - java.net.BindException: Address already in use: JVM_Bind
+17:57:59,515  INFO ServidorWebIecisa:35 - Servidor arrancado
+17:58:10,156  INFO ServidorWebIecisa:31 - Versión: 0.1
+17:58:10,187 ERROR ServidorWebIecisa:148 - java.lang.ClassNotFoundException: servidorwebnoticias.ServidorWebNoticias.class
+17:58:10,187 ERROR ServidorWebIecisa:57 - java.net.BindException: Address already in use: JVM_Bind
+17:58:10,187  INFO ServidorWebIecisa:35 - Servidor arrancado
+14:22:49,234  INFO ServidorWebIecisa:31 - Versión: 0.1
+14:22:49,281 ERROR ServidorWebIecisa:148 - java.lang.ClassNotFoundException: servidorwebnoticias.ServidorWebNoticias.class
+14:22:49,312  INFO ServidorWebIecisa:35 - Servidor arrancado
+15:57:31,500  INFO ServidorWebIecisa:31 - Versión: 0.1
+15:57:31,546 ERROR ServidorWebIecisa:158 - java.lang.ClassNotFoundException: servidorwebnoticias.ServidorWebNoticias.class
+15:57:31,562  INFO ServidorWebIecisa:35 - Servidor arrancado
+15:58:08,312  INFO ServidorWebIecisa:31 - Versión: 0.1
+15:58:08,343 ERROR ServidorWebIecisa:158 - java.lang.ClassNotFoundException: ServidorWebNoticias.class
+15:58:08,359  INFO ServidorWebIecisa:35 - Servidor arrancado
+15:58:24,093  INFO ServidorWebIecisa:31 - Versión: 0.1
+15:58:24,140 ERROR ServidorWebIecisa:158 - java.lang.ClassNotFoundException: ServidorWebNoticias.class
+15:58:24,156  INFO ServidorWebIecisa:35 - Servidor arrancado
+15:58:33,531  INFO ServidorWebIecisa:31 - Versión: 0.1
+15:58:33,562 ERROR ServidorWebIecisa:158 - java.lang.ClassNotFoundException: servidorwebnoticias/ServidorWebNoticias.class
+15:58:33,578  INFO ServidorWebIecisa:35 - Servidor arrancado
+15:58:45,328  INFO ServidorWebIecisa:31 - Versión: 0.1
+15:58:45,375 ERROR ServidorWebIecisa:158 - java.lang.ClassNotFoundException: servidorwebnoticias.ServidorWebNoticias
+15:58:45,390  INFO ServidorWebIecisa:35 - Servidor arrancado
+16:05:06,640  INFO ServidorWebIecisa:31 - Versión: 0.1
+16:05:06,671 ERROR ServidorWebIecisa:158 - java.lang.ClassNotFoundException: servidorwebnoticias.ServidorWebNoticias.class
+16:05:06,687  INFO ServidorWebIecisa:35 - Servidor arrancado
+16:05:38,343  INFO ServidorWebIecisa:31 - Versión: 0.1
+16:05:38,375 ERROR ServidorWebIecisa:158 - java.lang.ClassNotFoundException: servidorwebnoticias.ServidorWebNoticias.class
+16:05:38,390  INFO ServidorWebIecisa:35 - Servidor arrancado
+16:05:52,968  INFO ServidorWebIecisa:31 - Versión: 0.1
+16:05:53,000 ERROR ServidorWebIecisa:158 - java.lang.ClassNotFoundException: servidorwebnoticias/ServidorWebNoticias.class
+16:05:53,015  INFO ServidorWebIecisa:35 - Servidor arrancado

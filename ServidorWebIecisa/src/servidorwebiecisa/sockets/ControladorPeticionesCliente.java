@@ -56,7 +56,8 @@ public class ControladorPeticionesCliente implements Runnable {
                     HttpInputStream input = procesarPeticion.procesarHttpInputStream(streamInput);
                     HttpOutputStream output = procesarPeticion.procesarHttpOuputStream(streamOuput);
                     
-                    if(input.getCabecera().recursoSolicitado.contains(servidor.getServicio())) {
+                    if(input.getCabecera().recursoSolicitado.contains(servidor.getServicio())
+                            && !servidor.getServicio().trim().isEmpty()) {
                         if (input.getCabecera().action == Cabecera.ACTION_GET) {
                             servidor.doGet(input, output);
                         } else if (input.getCabecera().action == Cabecera.ACTION_POST) {

@@ -22,7 +22,7 @@ public abstract class IServidorWeb {
     
     public String PATH_INI;
     
-    private Map<String, String> valores;
+    public Map<String, String> valores;
     
     public IServidorWeb(Map<String, String> valores) {
         this.valores = valores;
@@ -40,6 +40,10 @@ public abstract class IServidorWeb {
         String servicio = valores.get("servicio");
         
         return servicio;
+    }
+    
+    public String getConfiguracion(String data) {
+        return valores.get(data);
     }
     
     public final void servirEstatico(HttpInputStream inputStream, HttpOutputStream ouputStream) {
