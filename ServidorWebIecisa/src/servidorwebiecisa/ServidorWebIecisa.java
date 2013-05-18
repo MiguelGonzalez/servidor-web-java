@@ -1,22 +1,16 @@
 package servidorwebiecisa;
 
-import servidorwebiecisa.sockets.ControladorNuevosClientes;
-import java.io.IOException;
-import java.net.ServerSocket;
-import java.util.ArrayList;
-import java.util.List;
+import servidorwebiecisa.swing.controladores.ControllerSwingPrincipal;
+import javax.swing.JFrame;
 import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
-import servidorwebiecisa.servidorWeb.IServidorWeb;
 
-public class ServidorWebIecisa {
+public class ServidorWebIecisa extends JFrame {
     
     public final static Logger log = Logger.getLogger("ServidorWebIecisa");
     public static final String VERSION = "0.1";
     
-    private List<ServerSocket> skServers;
-    private ConfiguracionServidor configuracion;
-    
+    private ControllerSwingPrincipal controllerSwing;
     
     public static void main(String[] args) {
         //Configuramos el logger con los valores iniciales
@@ -25,42 +19,19 @@ public class ServidorWebIecisa {
         
         log.info("Versión: " + VERSION);
         
-        ServidorWebIecisa servidor = new ServidorWebIecisa();
-        servidor.start();
-        log.info("Servidor arrancado");
+        ServidorWebIecisa servidorWebIecisa = new
+                ServidorWebIecisa();
+        servidorWebIecisa.start();
+        
     }
     
     public ServidorWebIecisa() {
-        configuracion = ConfiguracionServidor.getInstance();
         
-        skServers = new ArrayList<>();
     }
     
     public void start() {
-        for(IServidorWeb servidor : configuracion.getServidores()) {
-            try {
-                String pathServicio = servidor.getConfiguracion("pathServicio");
-                String classServicio = servidor.getConfiguracion("classServicio");
-                
-                ServerSocket skServer;
-                
-                if(pathServicio != null && classServicio != null &&
-                        !pathServicio.isEmpty() && !classServicio.isEmpty()) {
-                    skServer = new ServerSocket(servidor.getPort());
-                } else {
-                    skServer = new ServerSocket(servidor.getPort());
-                }
-                
-                skServers.add(skServer);
-                
-                ControladorNuevosClientes controladorNuevosClientes = new
-                        ControladorNuevosClientes(servidor, skServer);
-                servidor.init();
-                controladorNuevosClientes.empezarAEscuchar();
-
-            } catch(IOException ex) {
-                ServidorWebIecisa.log.error("", ex);
-            }
-        }
+        controllerSwing = new ControllerSwingPrincipal();
+        
+        controllerSwing.start();
     }
 }
