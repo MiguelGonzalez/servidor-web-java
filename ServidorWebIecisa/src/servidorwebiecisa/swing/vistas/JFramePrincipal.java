@@ -15,13 +15,14 @@ import javax.swing.JPanel;
 public class JFramePrincipal extends JFrame {
     
     private JPanel panelSuperior;
+    private JPanel panelServidores;
     
     public JFramePrincipal(String tituloVentana) {
         super(tituloVentana);
         
         panelSuperior = null;
+        panelServidores = null;
     }
-    
     
     public void setPanelSuperior(JPanel panelSuperior) {
         if(this.panelSuperior != null) {
@@ -30,7 +31,16 @@ public class JFramePrincipal extends JFrame {
         this.panelSuperior = panelSuperior;
         getContentPane().add(this.panelSuperior, BorderLayout.NORTH);
         
-        getContentPane().repaint();
+        getContentPane().validate();
     }
     
+    public void setPanelServidores(JPanel panelServidores) {
+        if(this.panelServidores != null) {
+            getContentPane().remove(this.panelServidores);
+        }
+        this.panelServidores = panelServidores;
+        getContentPane().add(this.panelServidores, BorderLayout.CENTER);
+        
+        getContentPane().validate();
+    }
 }

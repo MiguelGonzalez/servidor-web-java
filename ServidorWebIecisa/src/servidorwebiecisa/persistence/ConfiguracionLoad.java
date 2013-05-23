@@ -2,11 +2,9 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package servidorwebiecisa;
+package servidorwebiecisa.persistence;
 
 import java.io.IOException;
-import java.lang.reflect.Constructor;
-import java.lang.reflect.InvocationTargetException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -21,23 +19,32 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
-import servidorwebiecisa.servidorWeb.IServidorWeb;
-import servidorwebiecisa.servidorWeb.ServidorWebDefault;
+import servidorwebiecisa.ServidorWebIecisa;
+import servidorwebiecisa.domain.ConfiguracionModel;
+import servidorwebiecisa.domain.ServidorModel;
 
-public class ConfiguracionServidor {
-    
-    private static ConfiguracionServidor INSTANCE;
-    
+public class ConfiguracionLoad {
     private int numPoolSockets;
     private int keepAliveTimeout;
-    private List<IServidorWeb> servidores;
     
-    static {
-        INSTANCE = null;
+    private List<ServidorModel> servidores;
+
+    private ConfiguracionModel configuracionModel;
+    
+    public ConfiguracionLoad(ConfiguracionModel configuracionModel) {
+        this.configuracionModel = configuracionModel;
     }
     
-    private ConfiguracionServidor() {
+    public void startLoading() {
+        constructModel();
+        
+        saveToRealModel();
+    }
+    
+    private void constructModel() {
         servidores = new ArrayList<>();
+        numPoolSockets = 32;
+        keepAliveTimeout = 60;
         
         //Construimos el DOM con las preferencias
         DocumentBuilderFactory dbFactory;
@@ -48,11 +55,8 @@ public class ConfiguracionServidor {
             dbFactory = DocumentBuilderFactory.newInstance();
             docBuilder = dbFactory.newDocumentBuilder();
             
-            //Si se agrega al fichero y este existe tenemos que cargar primero el XML en memoria
-            URL preferencesUrl = 
-                    ConfiguracionServidor.class.getResource("configServer.xml");
-            
-            Document xmlDoc  = docBuilder.parse(preferencesUrl.openStream());
+            Document xmlDoc  = docBuilder.parse(ServidorWebIecisa.
+                        propiedadesServidor.getProperty("nombreFicheroXML"));
 
             Element header = xmlDoc.getDocumentElement();
             
@@ -86,7 +90,7 @@ public class ConfiguracionServidor {
                                 }
                             }
                             
-                            addServidor(valoresServidor);
+                            addServidorModel(valoresServidor);
                         }
                     }
                 }
@@ -96,45 +100,42 @@ public class ConfiguracionServidor {
         }
     }
     
-    private void addServidor(Map<String, String> valoresServidor) {
-        String pathRelativeServicio = valoresServidor.get("pathRelativeServicio");
-        String classServicio = valoresServidor.get("classServicio");
-        
-        if(pathRelativeServicio != null && classServicio != null) {
-            try {
-                
-               Class<?> classServidor = Class.forName(classServicio);
-               Class[] ctorArgs = new Class[1];
-               ctorArgs[0] = valoresServidor.getClass();
-               Constructor<?> constructor = classServidor.getConstructor(ctorArgs);
-               
-               
-               
-               IServidorWeb servidorWeb = (IServidorWeb) classServidor.cast(
-                       constructor.newInstance(valoresServidor));
-                
-                servidores.add(servidorWeb);
-            } catch (InstantiationException ex) {
-                ServidorWebIecisa.log.error("", ex);
-            } catch (IllegalAccessException ex) {
-                ServidorWebIecisa.log.error("", ex);
-            } catch (NoSuchMethodException ex) {
-                ServidorWebIecisa.log.error("", ex);
-            } catch (SecurityException ex) {
-                ServidorWebIecisa.log.error("", ex);
-            } catch (IllegalArgumentException ex) {
-                ServidorWebIecisa.log.error("", ex);
-            } catch (InvocationTargetException ex) {
-                ServidorWebIecisa.log.error("", ex);
-            } catch (ClassNotFoundException ex) {
-                ServidorWebIecisa.log.error("", ex);
+    private void saveToRealModel() {
+        configuracionModel.updateKeelAliveTimeout(keepAliveTimeout);
+        configuracionModel.updateNumPoolSockets(numPoolSockets);
+        configuracionModel.addServidores(servidores);
+    }
+    
+    private void addServidorModel(Map<String, String> valoresServidor) {
+        try {
+            int port = Integer.parseInt(valoresServidor.get("port"));
+            String path = valoresServidor.get("path");
+            
+            if(path == null || path.isEmpty()) {
+                ServidorWebIecisa.log.error("Error al cargar la configuración del servidor, path no válido.");
+            } else {
+
+                String pathRelativeServicio = valoresServidor.get("pathRelativeServicio");
+                String classServicio = valoresServidor.get("classServicio");
+
+
+                ServidorModel servidorModel = null;
+                if(pathRelativeServicio != null && classServicio != null) {
+                    servidorModel = new ServidorModel(port, path,
+                            pathRelativeServicio, classServicio);
+                } else {
+                    servidorModel = new ServidorModel(port, path);
+                }
+
+                servidores.add(servidorModel);
             }
-        } else {
-            servidores.add(new ServidorWebDefault(valoresServidor));
+        } catch(NumberFormatException ex) {
+            ServidorWebIecisa.log.error("Error al cargar la configuración del servidor, puerto no válido.");
         }
     }
     
-    private <T> T getElementNode(Element element, String nodeName, T defaultValue, Class<T> resultClass) {
+    private <T> T getElementNode(Element element, String nodeName,
+            T defaultValue, Class<T> resultClass) {
         T response = null;
         
         NodeList listElements = element.getElementsByTagName(nodeName);
@@ -164,25 +165,5 @@ public class ConfiguracionServidor {
         } else {
             return response;
         }
-    }
-    
-    public static ConfiguracionServidor getInstance() {
-        if(INSTANCE == null) {
-            INSTANCE = new ConfiguracionServidor();
-        }
-
-        return INSTANCE;
-    }
-    
-    public int getNumPoolSockets() {
-        return numPoolSockets;
-    }
-    
-    public int getKeepAliveTimeout() {
-        return keepAliveTimeout * 1000;
-    }
-    
-    public List<IServidorWeb> getServidores() {
-        return servidores;
     }
 }

@@ -8,8 +8,7 @@ import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 import javax.swing.JButton;
 import javax.swing.JPanel;
-import servidorwebiecisa.swing.actions.ActionIniciarServidor;
-import servidorwebiecisa.swing.actions.ActionPararServidor;
+import servidorwebiecisa.swing.actions.ActionCrearServidor;
 import servidorwebiecisa.swing.actions.ActionSalir;
 
 
@@ -20,8 +19,7 @@ import servidorwebiecisa.swing.actions.ActionSalir;
 public class JPanelMenuSuperior extends JPanel {
     
     private JButton btnSalir;
-    private JButton btnIniciarServidor;
-    private JButton btnPararServidor;
+    private JButton btnCrearServidor;
     
     public JPanelMenuSuperior() {
         initComponents();
@@ -33,8 +31,7 @@ public class JPanelMenuSuperior extends JPanel {
     
     private void initComponents() {
         btnSalir = new JButton(new ActionSalir());
-        btnIniciarServidor = new JButton(new ActionIniciarServidor());
-        btnPararServidor = new JButton(new ActionPararServidor());
+        btnCrearServidor = new JButton(new ActionCrearServidor());
     }
     
     private void initInterfaz() {
@@ -43,8 +40,7 @@ public class JPanelMenuSuperior extends JPanel {
         add(btnSalir, BorderLayout.EAST);
         
         JPanel panelIzquierdo = new JPanel(new FlowLayout(FlowLayout.LEFT));
-        panelIzquierdo.add(btnIniciarServidor);
-        panelIzquierdo.add(btnPararServidor);
+        panelIzquierdo.add(btnCrearServidor);
         
         add(panelIzquierdo, BorderLayout.CENTER);
     }

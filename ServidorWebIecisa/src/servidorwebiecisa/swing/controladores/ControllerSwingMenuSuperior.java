@@ -5,14 +5,13 @@
 package servidorwebiecisa.swing.controladores;
 
 import javax.swing.JPanel;
-import servidorwebiecisa.controllers.Controller;
 import servidorwebiecisa.swing.vistas.JPanelMenuSuperior;
 
 /**
  *
  * @author Administrator
  */
-public class ControllerSwingMenuSuperior extends Controller {
+public class ControllerSwingMenuSuperior extends AbstractController {
     
     private JPanelMenuSuperior menuSuperior;
     

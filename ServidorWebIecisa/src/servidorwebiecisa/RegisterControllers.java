@@ -5,7 +5,7 @@
 package servidorwebiecisa;
 
 import java.util.HashMap;
-import servidorwebiecisa.controllers.Controller;
+import servidorwebiecisa.swing.controladores.AbstractController;
 
 /**
  *
@@ -14,7 +14,7 @@ import servidorwebiecisa.controllers.Controller;
 public class RegisterControllers {
     
     private static RegisterControllers INSTANCE = null;
-    private HashMap<String, Controller> controladores;
+    private HashMap<String, AbstractController> controladores;
     
     private RegisterControllers() {
         controladores = new HashMap<>();
@@ -36,11 +36,11 @@ public class RegisterControllers {
         return (T) classController.cast(controladores.get(nameController));
     }
     
-    public void addController(Controller controller) {
+    public void addController(AbstractController controller) {
         controladores.put(controller.getClass().getName(), controller);
     }
     
-    public void addController(String nameController, Controller controller) {
+    public void addController(String nameController, AbstractController controller) {
         controladores.put(nameController, controller);
     }
 }

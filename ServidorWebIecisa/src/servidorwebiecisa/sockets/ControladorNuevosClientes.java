@@ -9,7 +9,7 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-import servidorwebiecisa.ConfiguracionServidor;
+import servidorwebiecisa.domain.ConfiguracionModel;
 import servidorwebiecisa.ServidorWebIecisa;
 import servidorwebiecisa.servidorWeb.IServidorWeb;
 
@@ -22,7 +22,7 @@ public class ControladorNuevosClientes extends Thread {
     private ServerSocket skServer;
     private boolean corriendo;
     private ExecutorService executorServiceServer;
-    private ConfiguracionServidor config = ConfiguracionServidor.getInstance();
+    private ConfiguracionModel config = ConfiguracionModel.getInstance();
     
     private IServidorWeb servidor;
     

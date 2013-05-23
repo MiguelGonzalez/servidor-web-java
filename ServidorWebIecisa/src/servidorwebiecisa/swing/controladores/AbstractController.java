@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package servidorwebiecisa.controllers;
+package servidorwebiecisa.swing.controladores;
 
 import servidorwebiecisa.RegisterControllers;
 
@@ -10,8 +10,8 @@ import servidorwebiecisa.RegisterControllers;
  *
  * @author Administrator
  */
-public abstract class Controller {
-    public Controller() {
+public abstract class AbstractController {
+    public AbstractController() {
         registerController();
     }
     
