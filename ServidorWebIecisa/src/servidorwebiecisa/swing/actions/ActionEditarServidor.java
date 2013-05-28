@@ -11,8 +11,8 @@ import static javax.swing.Action.MNEMONIC_KEY;
 import static javax.swing.Action.NAME;
 import static javax.swing.Action.SELECTED_KEY;
 import static javax.swing.Action.SHORT_DESCRIPTION;
-import servidorwebiecisa.RegisterControllers;
-import servidorwebiecisa.swing.controladores.ControllerSwingPrincipal;
+import servidorwebiecisa.controllers.AlmacenControladores;
+import servidorwebiecisa.controllers.swing.FrameConcrete;
 
 /**
  *
@@ -20,7 +20,7 @@ import servidorwebiecisa.swing.controladores.ControllerSwingPrincipal;
  */
 public class ActionEditarServidor extends AbstractAction {
 
-    private ControllerSwingPrincipal controllerSwing;
+    private FrameConcrete controllerSwing;
     
     public ActionEditarServidor() {
         super("Editar servidor", null);
@@ -30,8 +30,8 @@ public class ActionEditarServidor extends AbstractAction {
         putValue(MNEMONIC_KEY, Integer.valueOf(KeyEvent.VK_I));
         putValue(SELECTED_KEY, Boolean.TRUE);
         
-        controllerSwing = RegisterControllers.getInstance().getController(
-                ControllerSwingPrincipal.class);
+        controllerSwing = AlmacenControladores.getInstance().getController(
+                FrameConcrete.class);
     }
         
     @Override

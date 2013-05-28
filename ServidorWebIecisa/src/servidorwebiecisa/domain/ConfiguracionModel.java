@@ -4,22 +4,8 @@
  */
 package servidorwebiecisa.domain;
 
-import java.io.IOException;
-import java.net.URL;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
-import org.w3c.dom.DOMException;
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
-import org.xml.sax.SAXException;
-import servidorwebiecisa.ServidorWebIecisa;
 import servidorwebiecisa.persistence.ConfiguracionLoad;
 import servidorwebiecisa.persistence.ConfiguracionSave;
 
@@ -33,8 +19,7 @@ public class ConfiguracionModel {
     private int keepAliveTimeout;
     
     private List<ServidorModel> servidores;
-    //private List<IServidorWeb> servidores;
-    
+
     static {
         INSTANCE = null;
     }

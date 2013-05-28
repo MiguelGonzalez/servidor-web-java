@@ -9,9 +9,11 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import servidorwebiecisa.MainServidor;
 import servidorwebiecisa.domain.ConfiguracionModel;
-import servidorwebiecisa.ServidorWebIecisa;
-import servidorwebiecisa.servidorWeb.IServidorWeb;
+import servidorwebiecisa.domain.ServidorModel;
 
 /**
  *
@@ -20,48 +22,51 @@ import servidorwebiecisa.servidorWeb.IServidorWeb;
 public class ControladorNuevosClientes extends Thread {
 
     private ServerSocket skServer;
-    private boolean corriendo;
     private ExecutorService executorServiceServer;
     private ConfiguracionModel config = ConfiguracionModel.getInstance();
     
-    private IServidorWeb servidor;
+    private ServidorModel servidor;
     
 
-    public ControladorNuevosClientes(IServidorWeb servidor, 
+    public ControladorNuevosClientes(ServidorModel servidorModel, 
             ServerSocket skServer) {
-        this.servidor = servidor;
+        this.servidor = servidorModel;
         this.skServer = skServer;
-        executorServiceServer = Executors.newFixedThreadPool(config.getNumPoolSockets());
+        executorServiceServer = Executors.newFixedThreadPool(
+                config.getNumPoolSockets());
     }
         
     @Override
     public void run() {
-        corriendo = true;
-        
-        while(corriendo) {
+        while(servidor.isCorriendo()) {
             try {
                 Socket skClient = skServer.accept();
                 skClient.setSoTimeout(config.getKeepAliveTimeout());
-                
                 
                 ControladorPeticionesCliente controladorCliente =
                         new ControladorPeticionesCliente(servidor, skClient);
                 
                 executorServiceServer.execute(controladorCliente);
             } catch (IOException ex) {
-                ServidorWebIecisa.log.error("", ex);
+                MainServidor.log.info("Servidor '" + servidor + "' parado");
             }
         }
-        executorServiceServer.shutdownNow();
     }
     
-    public void empezarAEscuchar() {
+    public void iniciarServidorWeb() {
+        servidor.setCorriendo(true);
         start();
     }
     
-    public void pararDeEscuchar() {
-
-        corriendo = false;
+    public void pararServidorWeb() {
+        servidor.setCorriendo(false);
+        
+        try {
+            executorServiceServer.shutdownNow();
+            skServer.close();
+        } catch (IOException ex) {
+            Logger.getLogger(ControladorNuevosClientes.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 }
 

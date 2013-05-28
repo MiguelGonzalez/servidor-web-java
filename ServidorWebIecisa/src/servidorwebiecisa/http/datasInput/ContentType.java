@@ -2,15 +2,16 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package servidorwebiecisa.procesadoresPeticion;
+package servidorwebiecisa.http.datasInput;
 
+import java.io.File;
 import java.util.HashMap;
 
 /**
  *
  * @author Administrator
  */
-public class ProcesarContentTypePeticion {
+public class ContentType {
     
     public final static String TYPE_APPLICATION_JSON = ".json";
     public final static String TYPE_APPLICATION_JAVASCRIPT = ".js";
@@ -33,9 +34,9 @@ public class ProcesarContentTypePeticion {
     public final static String TYPE_VIDEO_MP4 = ".mp4";
     public final static String TYPE_VIDEO_OGG = ".ogv";
     
-    private HashMap<String, String> contentTypes;
+    private final static HashMap<String, String> contentTypes;
     
-    public ProcesarContentTypePeticion() {
+    static {
         contentTypes = new HashMap<>();
         
         contentTypes.put(TYPE_APPLICATION_JSON, "application/json");
@@ -60,11 +61,12 @@ public class ProcesarContentTypePeticion {
         contentTypes.put(TYPE_VIDEO_OGG, "video/ogg");
     }
     
-    public String getContentType(String recursoSolicitado) {
-        int inicioExtension = recursoSolicitado.lastIndexOf(".");
+    public static String getContentType(File fich) {
+        String nameFich = fich.getName();
+        int inicioExtension = nameFich.lastIndexOf(".");
         String extension = "";
         if(inicioExtension != -1) {
-            extension = recursoSolicitado.substring(inicioExtension);
+            extension = nameFich.substring(inicioExtension);
         }
         
         return contentTypes.get(extension.toLowerCase());

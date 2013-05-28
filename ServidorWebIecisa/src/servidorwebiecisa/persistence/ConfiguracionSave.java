@@ -23,8 +23,8 @@ import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
+import servidorwebiecisa.MainServidor;
 import servidorwebiecisa.domain.ConfiguracionModel;
-import servidorwebiecisa.ServidorWebIecisa;
 import servidorwebiecisa.domain.ServidorModel;
 
 public class ConfiguracionSave {
@@ -39,8 +39,8 @@ public class ConfiguracionSave {
     }
     
     private void saveToPhisicalModel() {
-        Document xmlDoc = null;
-        Element elementoCabecera = null;
+        Document xmlDoc;
+        Element elementoCabecera;
         
         DocumentBuilderFactory dbFactory;
         DocumentBuilder docBuilder;
@@ -107,7 +107,7 @@ public class ConfiguracionSave {
 
                 source = new DOMSource(xmlDoc);
                 
-                File fichGuardar = new File(ServidorWebIecisa.
+                File fichGuardar = new File(MainServidor.
                         propiedadesServidor.getProperty("nombreFicheroXML"));
                 out = new FileOutputStream(
                         fichGuardar, false);
@@ -119,9 +119,9 @@ public class ConfiguracionSave {
             } catch (TransformerConfigurationException ex) {
                 Logger.getLogger(ConfiguracionSave.class.getName()).log(Level.SEVERE, null, ex);
             } catch (TransformerException ex) {
-                ServidorWebIecisa.log.error("Error", ex);
+                MainServidor.log.error("Error", ex);
             } catch(IOException ex) {
-                ServidorWebIecisa.log.error("Error", ex);
+                MainServidor.log.error("Error", ex);
             } finally {
                 try {
                     if(osw != null) {
@@ -131,11 +131,11 @@ public class ConfiguracionSave {
                         out.close();
                     }
                 } catch(IOException ex) {
-                    ServidorWebIecisa.log.error("Error", ex);
+                    MainServidor.log.error("Error", ex);
                 }
             }
         } catch (ParserConfigurationException ex) {
-            ServidorWebIecisa.log.error("Error", ex);
+            MainServidor.log.error("Error", ex);
         }
     }
 }

@@ -11,8 +11,8 @@ import static javax.swing.Action.MNEMONIC_KEY;
 import static javax.swing.Action.NAME;
 import static javax.swing.Action.SELECTED_KEY;
 import static javax.swing.Action.SHORT_DESCRIPTION;
-import servidorwebiecisa.RegisterControllers;
-import servidorwebiecisa.swing.controladores.ControllerSwingPrincipal;
+import servidorwebiecisa.controllers.AlmacenControladores;
+import servidorwebiecisa.controllers.ServidorWebConcrete;
 
 /**
  *
@@ -20,7 +20,7 @@ import servidorwebiecisa.swing.controladores.ControllerSwingPrincipal;
  */
 public class ActionPararServidor extends AbstractAction {
 
-    private ControllerSwingPrincipal controllerSwing;
+    private ServidorWebConcrete servidorWebConcrete;
     
     public ActionPararServidor() {
         super("Parar servidor", null);
@@ -30,12 +30,12 @@ public class ActionPararServidor extends AbstractAction {
         putValue(MNEMONIC_KEY, Integer.valueOf(KeyEvent.VK_P));
         putValue(SELECTED_KEY, Boolean.TRUE);
         
-        controllerSwing = RegisterControllers.getInstance().getController(
-                ControllerSwingPrincipal.class);
+        servidorWebConcrete = AlmacenControladores.getInstance().
+                getController(ServidorWebConcrete.class);
     }
         
     @Override
     public void actionPerformed(ActionEvent e) {
-        controllerSwing.pararServidor();
+        servidorWebConcrete.pararServidor();
     }    
 }

@@ -23,14 +23,14 @@ import servidorwebiecisa.swing.models.JListServidoresModel;
  *
  * @author paracaidista
  */
-public class JPanelServidores extends JPanel {
+public class VistaListadoServidores extends JPanel {
     
     private JLabel lblMsgListado;
     private JListServidoresModel modelServidores;
     private JPopupMenu opcionesServidor;
     private JList lstServidores;
     
-    public JPanelServidores() {
+    public VistaListadoServidores() {
         initComponents();
         
         initInterfaz();

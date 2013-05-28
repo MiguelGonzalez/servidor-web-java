@@ -5,7 +5,6 @@
 package servidorwebiecisa.persistence;
 
 import java.io.IOException;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -19,7 +18,7 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
-import servidorwebiecisa.ServidorWebIecisa;
+import servidorwebiecisa.MainServidor;
 import servidorwebiecisa.domain.ConfiguracionModel;
 import servidorwebiecisa.domain.ServidorModel;
 
@@ -55,7 +54,7 @@ public class ConfiguracionLoad {
             dbFactory = DocumentBuilderFactory.newInstance();
             docBuilder = dbFactory.newDocumentBuilder();
             
-            Document xmlDoc  = docBuilder.parse(ServidorWebIecisa.
+            Document xmlDoc  = docBuilder.parse(MainServidor.
                         propiedadesServidor.getProperty("nombreFicheroXML"));
 
             Element header = xmlDoc.getDocumentElement();
@@ -96,7 +95,7 @@ public class ConfiguracionLoad {
                 }
             }
         } catch (ParserConfigurationException | IOException | SAXException | DOMException ex) {
-            ServidorWebIecisa.log.error("Error", ex);
+            MainServidor.log.error("Error", ex);
         }
     }
     
@@ -112,7 +111,7 @@ public class ConfiguracionLoad {
             String path = valoresServidor.get("path");
             
             if(path == null || path.isEmpty()) {
-                ServidorWebIecisa.log.error("Error al cargar la configuración del servidor, path no válido.");
+                MainServidor.log.error("Error al cargar la configuración del servidor, path no válido.");
             } else {
 
                 String pathRelativeServicio = valoresServidor.get("pathRelativeServicio");
@@ -130,7 +129,7 @@ public class ConfiguracionLoad {
                 servidores.add(servidorModel);
             }
         } catch(NumberFormatException ex) {
-            ServidorWebIecisa.log.error("Error al cargar la configuración del servidor, puerto no válido.");
+            MainServidor.log.error("Error al cargar la configuración del servidor, puerto no válido.");
         }
     }
     

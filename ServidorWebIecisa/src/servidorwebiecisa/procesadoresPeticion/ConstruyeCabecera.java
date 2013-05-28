@@ -6,9 +6,9 @@ package servidorwebiecisa.procesadoresPeticion;
 
 import servidorwebiecisa.http.datasInput.Cabecera;
 
-public class ProcesarCabeceraPeticion  {
+public class ConstruyeCabecera  {
     
-    public ProcesarCabeceraPeticion() {
+    public ConstruyeCabecera() {
     }
     
     public Cabecera getCabecera(String peticionCliente) {

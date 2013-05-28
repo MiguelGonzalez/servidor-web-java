@@ -5,15 +5,11 @@
 package servidorwebiecisa.swing.actions;
 
 import java.awt.event.ActionEvent;
-import java.awt.event.KeyEvent;
 import javax.swing.AbstractAction;
-import static javax.swing.Action.MNEMONIC_KEY;
 import static javax.swing.Action.NAME;
-import static javax.swing.Action.SELECTED_KEY;
 import static javax.swing.Action.SHORT_DESCRIPTION;
-import servidorwebiecisa.RegisterControllers;
-import servidorwebiecisa.swing.controladores.ControllerSwingPanelServidores;
-import servidorwebiecisa.swing.controladores.ControllerSwingPrincipal;
+import servidorwebiecisa.controllers.AlmacenControladores;
+import servidorwebiecisa.controllers.swing.FrameConcrete;
 
 /**
  *
@@ -21,7 +17,7 @@ import servidorwebiecisa.swing.controladores.ControllerSwingPrincipal;
  */
 public class ActionBorrarServidor extends AbstractAction {
 
-    private ControllerSwingPrincipal controllerSwing;
+    private FrameConcrete controllerSwing;
     
     public ActionBorrarServidor() {
         super("Borrar servidor", null);
@@ -29,8 +25,8 @@ public class ActionBorrarServidor extends AbstractAction {
         putValue(SHORT_DESCRIPTION, "Borrar servidor");
         putValue(NAME, "Borrar servidor");
         
-        controllerSwing = RegisterControllers.getInstance().getController(
-                ControllerSwingPrincipal.class);
+        controllerSwing = AlmacenControladores.getInstance().getController(
+                FrameConcrete.class);
     }
         
     @Override

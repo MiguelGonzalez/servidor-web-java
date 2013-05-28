@@ -5,13 +5,17 @@
 package servidorwebiecisa.http;
 
 import java.io.DataOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import servidorwebiecisa.ServidorWebIecisa;
+import servidorwebiecisa.MainServidor;
 import servidorwebiecisa.http.datasInput.Cookie;
+import servidorwebiecisa.http.datasInput.ContentType;
 
 /**
  *
@@ -20,51 +24,34 @@ import servidorwebiecisa.http.datasInput.Cookie;
 public class HttpOutputStream {
     private DataOutputStream streamOutput;
     private SimpleDateFormat parserDate;
-    private String contentTypeDefault;
-    
-    private boolean escritaCabecera = false;
+
     private List<Cookie> cookiesEnviar;
     
-    public HttpOutputStream(DataOutputStream streamOutput, String contentTypeDefault) {
+    public HttpOutputStream(DataOutputStream streamOutput) {
         this.streamOutput = streamOutput;
-        this.contentTypeDefault = contentTypeDefault;
-        
+
         parserDate = new SimpleDateFormat("EEE, d MMM yyyy HH:mm:ss");
-        cookiesEnviar = new ArrayList<Cookie>();
+        cookiesEnviar = new ArrayList<>();
     }
     
     public DataOutputStream getDataOuputStream() {
         return streamOutput;
     }
     
-    public synchronized void writeError(byte[] response) {
+    public synchronized void writeResponse(byte[] response, String contentType) {
         try {
-            streamOutput.writeBytes("HTTP/1.0 404 Not Found\r\n");
+            writeHeader(contentType);
+
+            streamOutput.writeBytes("Content-Length: " + response.length + "\r\n");
             streamOutput.writeBytes("\r\n");
             streamOutput.write(response);
         } catch (IOException ex) {
-            ServidorWebIecisa.log.error(ex);
+            MainServidor.log.error(ex);
         }
     }
     
-    public synchronized void writeHeader() {
+    private synchronized void writeHeader(String contentType) {
         try {
-            streamOutput.writeBytes("HTTP/1.1 200 OK\r\n");
-            streamOutput.writeBytes("Date: " + parserDate.format(new Date()) + " GMT\r\n");
-            streamOutput.writeBytes("Server: Apache/0.8.4\r\n");
-            streamOutput.writeBytes("Connection: Keep-Alive\r\n");
-            streamOutput.writeBytes("Content-Type: " + contentTypeDefault + "\r\n");
-            for(Cookie cookie : cookiesEnviar) {
-                streamOutput.writeBytes("Set-Cookie: " + cookie.nameCookie + "=" + cookie.valueCookie + "\r\n");
-            }
-        } catch (IOException ex) {
-            ServidorWebIecisa.log.error(ex);
-        }
-    }
-    
-    public synchronized void writeHeader(String contentType) {
-        try {
-            escritaCabecera = true;
             streamOutput.writeBytes("HTTP/1.1 200 OK\r\n");
             streamOutput.writeBytes("Date: " + parserDate.format(new Date()) + " GMT\r\n");
             streamOutput.writeBytes("Server: Apache/0.8.4\r\n");
@@ -74,36 +61,72 @@ public class HttpOutputStream {
                 streamOutput.writeBytes("Set-Cookie: " + cookie.nameCookie + "=" + cookie.valueCookie + "\r\n");
             }
         } catch (IOException ex) {
-            ServidorWebIecisa.log.error(ex);
+            MainServidor.log.error(ex);
         }
     }
     
-    public synchronized void writeResponse(byte[] response) {
+    private synchronized void writeError(byte[] response) {
         try {
-            if(!escritaCabecera) {
-                writeHeader();
-            }
+            writeHeader("text/html");
             streamOutput.writeBytes("Content-Length: " + response.length + "\r\n");
-            //streamOutput.writeBytes("Expires: Sat, 01 Jan 2000 00:59:59 GMT\r\n");
-            //streamOutput.writeBytes("Last-modified: Fri, 09 Aug 1996 14:21:40 GMT\r\n");
             streamOutput.writeBytes("\r\n");
             streamOutput.write(response);
         } catch (IOException ex) {
-            ServidorWebIecisa.log.error(ex);
+            MainServidor.log.error(ex);
         }
     }
     
-    public synchronized void writeResponse(byte[] response, String contentType) {
-        if(!escritaCabecera) {
-            writeHeader(contentType);
-        }
-        
-        writeResponse(response);
-    }
-    
-    
-    
-    public void establecerCookie(Cookie cookie) {
+    public void appendCookieToSend(Cookie cookie) {
         cookiesEnviar.add(cookie);
+    }
+    
+    public final void servirEstatico(File fileEstatico) {
+        if(existeRecursoSolicitado(fileEstatico)) {
+            writeResponse(
+                    getContenidoPagina(fileEstatico),
+                    getContentTypeRecurso(fileEstatico));
+        } else {
+            byte[] error404 = "<h1>Error 404 - El recurso solicitado no existe</h1>".
+                    getBytes();
+            writeError(error404);
+        }
+    }
+    
+    private byte[] getContenidoPagina(File fileEstatico) {
+        byte fileContent[] = null;
+        
+        if(fileEstatico.exists()) {
+            FileInputStream  fis = null;
+            
+            try {
+                fis = new FileInputStream(fileEstatico);
+                
+                fileContent = new byte[(int)fileEstatico.length()];
+                fis.read(fileContent);
+            } catch (FileNotFoundException ex) {
+                MainServidor.log.error(ex);
+            } catch (IOException ex) {
+                MainServidor.log.error(ex);
+            } finally {
+                try {
+                    if(fis != null) {
+                        fis.close();
+                    }
+                } catch (IOException ex) {
+                    MainServidor.log.error(ex);
+                }
+            }
+            return fileContent;
+        } else {
+            return fileContent;
+        }
+    }
+    
+    private String getContentTypeRecurso(File fichRecurso) {
+        return ContentType.getContentType(fichRecurso);
+    }
+    
+    private boolean existeRecursoSolicitado(File recursoSolicitado) {
+        return recursoSolicitado.exists() && recursoSolicitado.isFile();
     }
 }

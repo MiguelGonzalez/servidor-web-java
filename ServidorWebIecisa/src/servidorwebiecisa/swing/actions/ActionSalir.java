@@ -7,8 +7,8 @@ package servidorwebiecisa.swing.actions;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 import javax.swing.AbstractAction;
-import servidorwebiecisa.RegisterControllers;
-import servidorwebiecisa.swing.controladores.ControllerSwingPrincipal;
+import servidorwebiecisa.controllers.AlmacenControladores;
+import servidorwebiecisa.controllers.ServidorWebConcrete;
 
 /**
  *
@@ -16,7 +16,7 @@ import servidorwebiecisa.swing.controladores.ControllerSwingPrincipal;
  */
 public class ActionSalir extends AbstractAction {
 
-    private ControllerSwingPrincipal controllerSwing;
+    private ServidorWebConcrete servidorWebConcrete;
     
     public ActionSalir() {
         super("Salir", null);
@@ -26,12 +26,12 @@ public class ActionSalir extends AbstractAction {
         putValue(MNEMONIC_KEY, Integer.valueOf(KeyEvent.VK_S));
         putValue(SELECTED_KEY, Boolean.TRUE);
         
-        controllerSwing = RegisterControllers.getInstance().getController(
-                ControllerSwingPrincipal.class);
+        servidorWebConcrete = AlmacenControladores.getInstance().
+                getController(ServidorWebConcrete.class);
     }
         
     @Override
     public void actionPerformed(ActionEvent e) {
-        controllerSwing.salirAplicacion();
+        servidorWebConcrete.salirAplicacion();
     }    
 }

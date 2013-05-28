@@ -4,25 +4,23 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.util.List;
-import servidorwebiecisa.ServidorWebIecisa;
+import servidorwebiecisa.MainServidor;
 import servidorwebiecisa.http.HttpInputStream;
 import servidorwebiecisa.http.HttpOutputStream;
 import servidorwebiecisa.http.datasInput.Cabecera;
 import servidorwebiecisa.http.datasInput.Cookie;
 import servidorwebiecisa.http.datasInput.Formulario;
 
-public class ProcesarPeticion {
+public class ConstruyePeticionCliente {
     
-    private ProcesarCabeceraPeticion procesarCabeceraPeticion;
-    private ProcesarFormularioPeticion procesarFormularioPeticion;
-    private ProcesarCookiePeticion procesarCookiePeticion;
-    private ProcesarContentTypePeticion procesarContentTypePeticion;
+    private ConstruyeCabecera procesarCabeceraPeticion;
+    private ContruyeFormulario procesarFormularioPeticion;
+    private ContruyeCookie procesarCookiePeticion;
     
-    public ProcesarPeticion() {
-        procesarCabeceraPeticion = new ProcesarCabeceraPeticion();
-        procesarFormularioPeticion = new ProcesarFormularioPeticion();
-        procesarCookiePeticion = new ProcesarCookiePeticion();
-        procesarContentTypePeticion = new ProcesarContentTypePeticion();
+    public ConstruyePeticionCliente() {
+        procesarCabeceraPeticion = new ConstruyeCabecera();
+        procesarFormularioPeticion = new ContruyeFormulario();
+        procesarCookiePeticion = new ContruyeCookie();
     }
     
     private Cabecera cabeceraPeticion;
@@ -41,8 +39,7 @@ public class ProcesarPeticion {
     }
     
     public HttpOutputStream procesarHttpOuputStream(DataOutputStream streamOuput) {
-        String contentType = procesarContentTypePeticion.getContentType(cabeceraPeticion.recursoSolicitado);
-        return new HttpOutputStream(streamOuput, contentType);
+        return new HttpOutputStream(streamOuput);
     }
     
     private StringBuilder getPeticionCliente(DataInputStream streamInput) throws IOException {
@@ -57,7 +54,7 @@ public class ProcesarPeticion {
         try {
             Thread.sleep(500);
         } catch (InterruptedException ex) {
-            ServidorWebIecisa.log.error(ex);
+            MainServidor.log.error(ex);
         }
         
         if (streamInput.available() == 0) {

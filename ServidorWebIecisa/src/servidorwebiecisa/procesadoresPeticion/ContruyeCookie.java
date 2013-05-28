@@ -12,8 +12,8 @@ import servidorwebiecisa.http.datasInput.Cookie;
  *
  * @author Administrator
  */
-public class ProcesarCookiePeticion {
-    public ProcesarCookiePeticion() {
+public class ContruyeCookie {
+    public ContruyeCookie() {
         
     }
     

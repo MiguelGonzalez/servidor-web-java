@@ -2,27 +2,26 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package servidorwebiecisa;
+package servidorwebiecisa.controllers;
 
 import java.util.HashMap;
-import servidorwebiecisa.swing.controladores.AbstractController;
 
 /**
  *
  * @author Administrator
  */
-public class RegisterControllers {
+public class AlmacenControladores {
     
-    private static RegisterControllers INSTANCE = null;
-    private HashMap<String, AbstractController> controladores;
+    private static AlmacenControladores INSTANCE = null;
+    private HashMap<String, Controller> controladores;
     
-    private RegisterControllers() {
+    private AlmacenControladores() {
         controladores = new HashMap<>();
     }
     
-    public static RegisterControllers getInstance() {
+    public static AlmacenControladores getInstance() {
         if(INSTANCE == null) {
-            INSTANCE = new RegisterControllers();
+            INSTANCE = new AlmacenControladores();
         }
         
         return INSTANCE;
@@ -36,11 +35,11 @@ public class RegisterControllers {
         return (T) classController.cast(controladores.get(nameController));
     }
     
-    public void addController(AbstractController controller) {
+    public void addController(Controller controller) {
         controladores.put(controller.getClass().getName(), controller);
     }
     
-    public void addController(String nameController, AbstractController controller) {
+    public void addController(String nameController, Controller controller) {
         controladores.put(nameController, controller);
     }
 }

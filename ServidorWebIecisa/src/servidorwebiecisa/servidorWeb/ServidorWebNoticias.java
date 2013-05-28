@@ -4,7 +4,8 @@
  */
 package servidorwebiecisa.servidorWeb;
 
-import java.util.HashMap;
+import java.io.File;
+import servidorwebiecisa.domain.ServidorModel;
 import servidorwebiecisa.http.HttpInputStream;
 import servidorwebiecisa.http.HttpOutputStream;
 import servidorwebiecisa.http.datasInput.Cabecera;
@@ -15,10 +16,10 @@ import servidorwebiecisa.http.datasInput.Formulario;
  *
  * @author paracaidista
  */
-public class ServidorWebNoticias extends IServidorWeb {
+public class ServidorWebNoticias extends ServicioServidor {
     
-    public ServidorWebNoticias(HashMap<String, String> valores) {
-        super(valores);
+    public ServidorWebNoticias(ServidorModel servidorModel) {
+        super(servidorModel);
     }
     
     @Override
@@ -32,35 +33,45 @@ public class ServidorWebNoticias extends IServidorWeb {
             String password = formulario.get("password");
             
             if("admin".equals(name) && "entrar".equals(password)) {
-                outputStream.establecerCookie(new Cookie("login", "true"));
+                outputStream.appendCookieToSend(new Cookie("login", "true"));
                 outputStream.writeResponse("{\"successful\":true}".getBytes(), 
                         "application/json");
             } else {
-                outputStream.establecerCookie(new Cookie("login", "false"));
+                outputStream.appendCookieToSend(new Cookie("login", "false"));
                 outputStream.writeResponse("{\"successful\":false}".getBytes(), 
                         "application/json");
             }
         } else if(cabecera.recursoSolicitado.endsWith("salir")) {
-            outputStream.establecerCookie(new Cookie("login", "false"));
-            outputStream.writeResponse(getContenidoPagina("admin/login.htm"), "text/html");
+            outputStream.appendCookieToSend(new Cookie("login", "false"));
+            File fichEstatico = new File(servidorModel.getPath() +
+                        "/admin/login.htm");
+            outputStream.servirEstatico(fichEstatico);
         } else {
             Cookie cookieLogin = inputStream.getCookie("login");
-            if(controlLogin(cookieLogin)) {
-                servirEstatico(inputStream, outputStream);
+            if(estaLogueado(cookieLogin)) {
+                File fichEstatico = new File(servidorModel.getPath() +
+                        inputStream.getCabecera().recursoSolicitado);
+                outputStream.servirEstatico(fichEstatico);
             } else {
-                outputStream.writeResponse(getContenidoPagina("admin/login.htm"));
+                File fichEstatico = new File(servidorModel.getPath() +
+                        "/admin/login.htm");
+                outputStream.servirEstatico(fichEstatico);
             }
         }
         
     }
 
     @Override
-    public void doGet(HttpInputStream inputStream, HttpOutputStream ouputStream) {
+    public void doGet(HttpInputStream inputStream, HttpOutputStream outputStream) {
         Cookie cookieLogin = inputStream.getCookie("login");
-        if(controlLogin(cookieLogin)) {
-            servirEstatico(inputStream, ouputStream);
+        if(estaLogueado(cookieLogin)) {
+            File fichEstatico = new File(servidorModel.getPath()+
+                        inputStream.getCabecera().recursoSolicitado);
+                outputStream.servirEstatico(fichEstatico);
         } else {
-            ouputStream.writeResponse(getContenidoPagina("admin/login.htm"));
+            File fichEstatico = new File(servidorModel.getPath()+
+                        "/admin/login.htm");
+                outputStream.servirEstatico(fichEstatico);
         }
         
     }
@@ -70,7 +81,7 @@ public class ServidorWebNoticias extends IServidorWeb {
         
     }
     
-    private boolean controlLogin(Cookie cookieLogin) {
+    private boolean estaLogueado(Cookie cookieLogin) {
         return cookieLogin != null && "true".equals(cookieLogin.valueCookie);
     }
     

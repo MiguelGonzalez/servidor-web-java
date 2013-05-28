@@ -6,16 +6,18 @@ package servidorwebiecisa.sockets;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.Socket;
-import servidorwebiecisa.ServidorWebIecisa;
+import servidorwebiecisa.MainServidor;
+import servidorwebiecisa.domain.ServidorModel;
 import servidorwebiecisa.http.datasInput.Cabecera;
 import servidorwebiecisa.http.HttpInputStream;
 import servidorwebiecisa.http.HttpOutputStream;
-import servidorwebiecisa.procesadoresPeticion.ProcesarPeticion;
-import servidorwebiecisa.servidorWeb.IServidorWeb;
+import servidorwebiecisa.procesadoresPeticion.ConstruyePeticionCliente;
+import servidorwebiecisa.servidorWeb.ServicioServidor;
 
 /**
  *
@@ -30,12 +32,12 @@ public class ControladorPeticionesCliente implements Runnable {
     private DataInputStream streamInput;
     private DataOutputStream streamOuput;
     
-    private ProcesarPeticion procesarPeticion;
-    private IServidorWeb servidor;
+    private ConstruyePeticionCliente construirPeticion;
+    private ServidorModel servidorModel;
 
-    public ControladorPeticionesCliente(IServidorWeb servidor,
+    public ControladorPeticionesCliente(ServidorModel servidorModel,
             Socket skClient) throws IOException {
-        this.servidor = servidor;
+        this.servidorModel = servidorModel;
         this.skClient = skClient;
         
         inputStream = this.skClient.getInputStream();
@@ -43,7 +45,7 @@ public class ControladorPeticionesCliente implements Runnable {
         outputStream = this.skClient.getOutputStream();
         streamOuput = new DataOutputStream(outputStream);
         
-        procesarPeticion = new ProcesarPeticion();
+        construirPeticion = new ConstruyePeticionCliente();
     }
 
     @Override
@@ -53,52 +55,90 @@ public class ControladorPeticionesCliente implements Runnable {
         while (corriendo) {
             try {
                 while(corriendo) {
-                    HttpInputStream input = procesarPeticion.procesarHttpInputStream(streamInput);
-                    HttpOutputStream output = procesarPeticion.procesarHttpOuputStream(streamOuput);
+                    HttpInputStream input = construirPeticion.
+                            procesarHttpInputStream(streamInput);
+                    HttpOutputStream output = construirPeticion.
+                            procesarHttpOuputStream(streamOuput);
                     
-                    if(input.getCabecera().recursoSolicitado.contains(servidor.getServicio())
-                            && !servidor.getServicio().trim().isEmpty()) {
-                        if (input.getCabecera().action == Cabecera.ACTION_GET) {
-                            servidor.doGet(input, output);
-                        } else if (input.getCabecera().action == Cabecera.ACTION_POST) {
-                            servidor.doPost(input, output);
-                        }
-                    } else {
-                        servidor.servirEstatico(input, output);
-                    }
+                    procesarPeticionCliente(input, output);
                 }   
             } catch(IOException ex) {
                 corriendo = false;
-                ServidorWebIecisa.log.error("", ex);
+                MainServidor.log.info("Conexión con el cliente cerrada");
             }
-            try {
-                streamInput.close();
-            } catch (IOException ex) {
-                ServidorWebIecisa.log.error("", ex);
-            }
-            try {
-                inputStream.close();
-            } catch (IOException ex) {
-                ServidorWebIecisa.log.error("", ex);
-            }
-            try {
-                streamOuput.close();
-            } catch (IOException ex) {
-                ServidorWebIecisa.log.error("", ex);
-            }
-            try {
-                outputStream.close();
-            } catch (IOException ex) {
-                ServidorWebIecisa.log.error("", ex);
-            }
+            
+            cerrarConexion();
 
             corriendo = false;
         }
     }
     
-
     public void dejarDeEscucharPeticiones() {
         corriendo = false;
+    }
+    
+    private void procesarPeticionCliente(HttpInputStream input, 
+            HttpOutputStream output) {
+        if(servidorModel.hasServicio()) {
+            procesarPeticionClienteConServicio(input, output);
+        } else {
+            procesarRespuestaEstatico(input, output);
+        }
+    }
+    
+    private void procesarPeticionClienteConServicio(HttpInputStream input, 
+            HttpOutputStream output) {
+        if(isPeticionAServicio(input.getCabecera().recursoSolicitado,
+                servidorModel.getPathRelativeServicio())) {
+            procesarPeticionServicio(input, output);
+        } else {
+            procesarRespuestaEstatico(input, output);
+        }
+    }
+    
+    private void procesarPeticionServicio(HttpInputStream input, 
+            HttpOutputStream output) {
+        ServicioServidor servicio = servidorModel.getServicioServidor();
+        if (input.getCabecera().action == Cabecera.ACTION_GET) {
+            servicio.doGet(input, output);
+        } else if (input.getCabecera().action == Cabecera.ACTION_POST) {
+            servicio.doPost(input, output);
+        }
+    }
+    
+    private void procesarRespuestaEstatico(HttpInputStream input, 
+            HttpOutputStream output) {
+        File fichRecurso = new File(servidorModel.getPath() +
+                input.getCabecera().recursoSolicitado);
+        output.servirEstatico(fichRecurso);
+    }
+    
+    private boolean isPeticionAServicio(String recursoSolicitado,
+            String pathRelativeServicio) {
+        return recursoSolicitado.contains(pathRelativeServicio);
+    }
+    
+    private void cerrarConexion() {
+        try {
+            streamInput.close();
+        } catch (IOException ex) {
+            MainServidor.log.error("", ex);
+        }
+        try {
+            inputStream.close();
+        } catch (IOException ex) {
+            MainServidor.log.error("", ex);
+        }
+        try {
+            streamOuput.close();
+        } catch (IOException ex) {
+            MainServidor.log.error("", ex);
+        }
+        try {
+            outputStream.close();
+        } catch (IOException ex) {
+            MainServidor.log.error("", ex);
+        }
     }
 
 }

@@ -2,26 +2,28 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package servidorwebiecisa.swing.controladores;
+package servidorwebiecisa.controllers.swing;
 
 import javax.swing.JPanel;
+import servidorwebiecisa.controllers.Controller;
+
 import servidorwebiecisa.domain.ServidorModel;
-import servidorwebiecisa.swing.vistas.JPanelServidores;
+import servidorwebiecisa.swing.vistas.VistaListadoServidores;
 
 /**
  *
  * @author paracaidista
  */
-public class ControllerSwingPanelServidores extends AbstractController {
+public class PanelServidoresConcrete extends Controller {
     
-    private JPanelServidores panelServidores;
+    private VistaListadoServidores panelServidores;
     
-    public ControllerSwingPanelServidores() {
+    public PanelServidoresConcrete() {
         panelServidores = null;
     }
     
     public void start() {
-        panelServidores = new JPanelServidores();
+        panelServidores = new VistaListadoServidores();
     }
     
     public JPanel getPanelServidores() {

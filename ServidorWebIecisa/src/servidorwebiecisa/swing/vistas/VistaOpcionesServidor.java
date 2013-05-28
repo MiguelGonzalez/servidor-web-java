@@ -24,7 +24,7 @@ import servidorwebiecisa.domain.ServidorModel;
  *
  * @author paracaidista
  */
-public class JDialogCrearEditarServidor extends JDialog {
+public class VistaOpcionesServidor extends JDialog {
     public static final int CANCELAR = 0;
     public static final int ACEPTAR = 1;
     
@@ -37,7 +37,7 @@ public class JDialogCrearEditarServidor extends JDialog {
     
     private ServidorModel servidorModel;
     
-    public JDialogCrearEditarServidor(Frame parent) {
+    public VistaOpcionesServidor(Frame parent) {
         super();
         
         init();
@@ -45,7 +45,7 @@ public class JDialogCrearEditarServidor extends JDialog {
         setLocationRelativeTo(parent);
     }
     
-    public JDialogCrearEditarServidor() {
+    public VistaOpcionesServidor() {
         super();
         
         init();
@@ -53,7 +53,7 @@ public class JDialogCrearEditarServidor extends JDialog {
         setLocationRelativeTo(null);
     }
     
-    public JDialogCrearEditarServidor(Frame parent, ServidorModel servidorModel) {
+    public VistaOpcionesServidor(Frame parent, ServidorModel servidorModel) {
         super();
         
         this.servidorModel = servidorModel;
@@ -63,7 +63,7 @@ public class JDialogCrearEditarServidor extends JDialog {
         setLocationRelativeTo(parent);
     }
     
-    public JDialogCrearEditarServidor(ServidorModel servidorModel) {
+    public VistaOpcionesServidor(ServidorModel servidorModel) {
         super();
         
         this.servidorModel = servidorModel;

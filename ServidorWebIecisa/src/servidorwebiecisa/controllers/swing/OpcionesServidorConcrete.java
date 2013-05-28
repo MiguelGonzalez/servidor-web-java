@@ -2,31 +2,32 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package servidorwebiecisa.swing.controladores;
+package servidorwebiecisa.controllers.swing;
 
-import servidorwebiecisa.RegisterControllers;
+import servidorwebiecisa.controllers.Controller;
+import servidorwebiecisa.controllers.AlmacenControladores;
 import servidorwebiecisa.domain.ConfiguracionModel;
 import servidorwebiecisa.domain.ServidorModel;
-import servidorwebiecisa.swing.vistas.JDialogCrearEditarServidor;
+import servidorwebiecisa.swing.vistas.VistaOpcionesServidor;
 
 /**
  *
  * @author paracaidista
  */
-public class ControllerSwingCrearEditarServidor extends AbstractController {
+public class OpcionesServidorConcrete extends Controller {
     
     
-    ControllerSwingPrincipal controllerPrincipal;
+    FrameConcrete controllerPrincipal;
     
-    public ControllerSwingCrearEditarServidor() {
-        controllerPrincipal = RegisterControllers.
+    public OpcionesServidorConcrete() {
+        controllerPrincipal = AlmacenControladores.
                 getInstance().getController(
-                ControllerSwingPrincipal.class);
+                FrameConcrete.class);
     }
     
     public void crearServidor() {
-        JDialogCrearEditarServidor dialogNuevoServidor = new
-                JDialogCrearEditarServidor(controllerPrincipal.getFramePrincipal());
+        VistaOpcionesServidor dialogNuevoServidor = new
+                VistaOpcionesServidor(controllerPrincipal.getFramePrincipal());
         
         dialogNuevoServidor.setVisible(true);
         
@@ -51,8 +52,8 @@ public class ControllerSwingCrearEditarServidor extends AbstractController {
     }
 
     void editarServidor(ServidorModel servidorModel) {
-        JDialogCrearEditarServidor dialogNuevoServidor = new
-                JDialogCrearEditarServidor(controllerPrincipal.getFramePrincipal(),
+        VistaOpcionesServidor dialogNuevoServidor = new
+                VistaOpcionesServidor(controllerPrincipal.getFramePrincipal(),
                 servidorModel);
         
         dialogNuevoServidor.setVisible(true);

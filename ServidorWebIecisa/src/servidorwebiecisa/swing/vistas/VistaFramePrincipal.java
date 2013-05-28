@@ -12,12 +12,12 @@ import javax.swing.JPanel;
  *
  * @author Administrator
  */
-public class JFramePrincipal extends JFrame {
+public class VistaFramePrincipal extends JFrame {
     
     private JPanel panelSuperior;
     private JPanel panelServidores;
     
-    public JFramePrincipal(String tituloVentana) {
+    public VistaFramePrincipal(String tituloVentana) {
         super(tituloVentana);
         
         panelSuperior = null;

@@ -16,12 +16,12 @@ import servidorwebiecisa.swing.actions.ActionSalir;
  *
  * @author Administrator
  */
-public class JPanelMenuSuperior extends JPanel {
+public class VistaMenuSuperior extends JPanel {
     
     private JButton btnSalir;
     private JButton btnCrearServidor;
     
-    public JPanelMenuSuperior() {
+    public VistaMenuSuperior() {
         initComponents();
         
         initInterfaz();

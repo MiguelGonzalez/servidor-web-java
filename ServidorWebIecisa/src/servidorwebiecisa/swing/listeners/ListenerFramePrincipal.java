@@ -2,8 +2,8 @@ package servidorwebiecisa.swing.listeners;
 
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import servidorwebiecisa.RegisterControllers;
-import servidorwebiecisa.swing.controladores.ControllerSwingPrincipal;
+import servidorwebiecisa.controllers.AlmacenControladores;
+import servidorwebiecisa.controllers.ServidorWebConcrete;
 
 /**
  *
@@ -11,15 +11,15 @@ import servidorwebiecisa.swing.controladores.ControllerSwingPrincipal;
  */
 public class ListenerFramePrincipal extends WindowAdapter {
     
-    private ControllerSwingPrincipal controller;
+    private ServidorWebConcrete servidorWebConcrete;
     
     public ListenerFramePrincipal() {
-        controller = RegisterControllers.getInstance().getController(
-                ControllerSwingPrincipal.class);
+        servidorWebConcrete = AlmacenControladores.getInstance().
+                getController(ServidorWebConcrete.class);
     }
     
     @Override
     public void windowClosing(WindowEvent e) {
-        controller.salirAplicacion();
+        servidorWebConcrete.salirAplicacion();
     }
 }

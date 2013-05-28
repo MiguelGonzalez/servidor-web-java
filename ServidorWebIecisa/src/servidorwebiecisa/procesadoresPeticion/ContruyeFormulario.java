@@ -10,8 +10,8 @@ import servidorwebiecisa.http.datasInput.Formulario;
  *
  * @author Administrator
  */
-public class ProcesarFormularioPeticion {
-    public ProcesarFormularioPeticion() {
+public class ContruyeFormulario {
+    public ContruyeFormulario() {
         
     }
     
