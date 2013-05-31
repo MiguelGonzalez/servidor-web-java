@@ -27,25 +27,10 @@ public class ServidorWebNoticias extends ServicioServidor {
         Cabecera cabecera = inputStream.getCabecera();
         
         if(cabecera.recursoSolicitado.endsWith("login")) {
-            Formulario formulario = inputStream.getFormulario();
-            
-            String name = formulario.get("name");
-            String password = formulario.get("password");
-            
-            if("admin".equals(name) && "entrar".equals(password)) {
-                outputStream.appendCookieToSend(new Cookie("login", "true"));
-                outputStream.writeResponse("{\"successful\":true}".getBytes(), 
-                        "application/json");
-            } else {
-                outputStream.appendCookieToSend(new Cookie("login", "false"));
-                outputStream.writeResponse("{\"successful\":false}".getBytes(), 
-                        "application/json");
-            }
+            tryLogin(inputStream, outputStream);
         } else if(cabecera.recursoSolicitado.endsWith("salir")) {
             outputStream.appendCookieToSend(new Cookie("login", "false"));
-            File fichEstatico = new File(servidorModel.getPath() +
-                        "/admin/login.htm");
-            outputStream.servirEstatico(fichEstatico);
+            escribirPaginaLogin(outputStream);
         } else {
             Cookie cookieLogin = inputStream.getCookie("login");
             if(estaLogueado(cookieLogin)) {
@@ -53,12 +38,41 @@ public class ServidorWebNoticias extends ServicioServidor {
                         inputStream.getCabecera().recursoSolicitado);
                 outputStream.servirEstatico(fichEstatico);
             } else {
-                File fichEstatico = new File(servidorModel.getPath() +
-                        "/admin/login.htm");
-                outputStream.servirEstatico(fichEstatico);
+                escribirPaginaLogin(outputStream);
             }
         }
         
+    }
+    
+    private void tryLogin(HttpInputStream inputStream, HttpOutputStream outputStream) {
+        Formulario formulario = inputStream.getFormulario();
+
+        String name = formulario.get("name");
+        String password = formulario.get("password");
+
+        if("admin".equals(name) && "entrar".equals(password)) {
+            respuestaJSonLoginOk(outputStream);
+        } else {
+            respuestaJSonLoginError(outputStream);
+        }
+    }
+    
+    private void respuestaJSonLoginOk(HttpOutputStream outputStream) {
+        outputStream.appendCookieToSend(new Cookie("login", "true"));
+        outputStream.writeResponse("{\"successful\":true}".getBytes(), 
+                "application/json");
+    }
+    
+    private void respuestaJSonLoginError(HttpOutputStream outputStream) {
+        outputStream.appendCookieToSend(new Cookie("login", "false"));
+        outputStream.writeResponse("{\"successful\":false}".getBytes(), 
+                "application/json");
+    }
+    
+    private void escribirPaginaLogin(HttpOutputStream outputStream) {
+        File fichEstatico = new File(servidorModel.getPath() +
+                "/admin/login.htm");
+        outputStream.servirEstatico(fichEstatico);
     }
 
     @Override
