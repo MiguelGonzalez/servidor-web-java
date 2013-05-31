@@ -50,11 +50,11 @@ public class ConfiguracionModel {
         return INSTANCE;
     }
     
-    public void updateNumPoolSockets(int numPoolSockets) {
+    public synchronized void updateNumPoolSockets(int numPoolSockets) {
         this.numPoolSockets = numPoolSockets;
     }
     
-    public void updateKeelAliveTimeout(int keepAliveTimeout) {
+    public synchronized void updateKeelAliveTimeout(int keepAliveTimeout) {
         this.keepAliveTimeout = keepAliveTimeout;
     }
     
@@ -62,7 +62,7 @@ public class ConfiguracionModel {
         return numPoolSockets;
     }
     
-    public int getKeepAliveTimeout() {
+    public int getKeepAliveTimeoutInMillis() {
         return keepAliveTimeout * 1000;
     }
     

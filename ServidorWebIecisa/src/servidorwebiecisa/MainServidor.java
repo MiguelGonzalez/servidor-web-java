@@ -29,7 +29,7 @@ public class MainServidor {
             setPropiedadesDefault();
             log.error("Error cargando propiedades", ex);
         }
-        log.info("Versi\u00f3n: " + MainServidor.VERSION);
+        log.info("Version: " + MainServidor.VERSION);
         ServidorWebConcrete servidorWebIecisa = new ServidorWebConcrete();
         servidorWebIecisa.start();
     }

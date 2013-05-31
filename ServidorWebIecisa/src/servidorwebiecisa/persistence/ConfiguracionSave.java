@@ -9,8 +9,6 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
@@ -62,7 +60,7 @@ public class ConfiguracionSave {
             
             Element keepAliveTimeOut = xmlDoc.createElement("keepAliveTimeOut");
             keepAliveTimeOut.setTextContent(Integer.toString(configuracionModel.
-                    getKeepAliveTimeout()/1000));
+                    getKeepAliveTimeoutInMillis()/1000));
             elementoCabecera.appendChild(keepAliveTimeOut);
             
             Element servidores = xmlDoc.createElement("servidores");
@@ -117,7 +115,7 @@ public class ConfiguracionSave {
 
                 transformer.transform(source, result);
             } catch (TransformerConfigurationException ex) {
-                Logger.getLogger(ConfiguracionSave.class.getName()).log(Level.SEVERE, null, ex);
+                MainServidor.log.error("Error", ex);
             } catch (TransformerException ex) {
                 MainServidor.log.error("Error", ex);
             } catch(IOException ex) {

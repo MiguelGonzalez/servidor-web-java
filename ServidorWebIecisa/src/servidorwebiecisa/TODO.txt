@@ -1,3 +1,0 @@
-- Parar servidor, aún no lo hace
-
-- Mostrar avisos de cuando se ha cerrado la conexión, ¿Funciona lo que está puesto?

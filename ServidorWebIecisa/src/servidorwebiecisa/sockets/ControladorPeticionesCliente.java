@@ -66,15 +66,12 @@ public class ControladorPeticionesCliente implements Runnable {
                 corriendo = false;
                 MainServidor.log.info("Conexión con el cliente cerrada");
             }
-            
-            cerrarConexion();
-
-            corriendo = false;
         }
     }
     
     public void dejarDeEscucharPeticiones() {
         corriendo = false;
+        cerrarConexion();
     }
     
     private void procesarPeticionCliente(HttpInputStream input, 

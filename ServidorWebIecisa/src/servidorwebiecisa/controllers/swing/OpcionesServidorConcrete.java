@@ -4,18 +4,19 @@
  */
 package servidorwebiecisa.controllers.swing;
 
+import javax.swing.JOptionPane;
 import servidorwebiecisa.controllers.Controller;
 import servidorwebiecisa.controllers.AlmacenControladores;
 import servidorwebiecisa.domain.ConfiguracionModel;
 import servidorwebiecisa.domain.ServidorModel;
 import servidorwebiecisa.swing.vistas.VistaOpcionesServidor;
+import servidorwebiecisa.swing.vistas.VistaOpcionesServidorWeb;
 
 /**
  *
  * @author paracaidista
  */
 public class OpcionesServidorConcrete extends Controller {
-    
     
     FrameConcrete controllerPrincipal;
     
@@ -71,6 +72,28 @@ public class OpcionesServidorConcrete extends Controller {
             } else {
                 servidorModel.updateTo(port, path);
             }
+        }
+    }
+
+    public void opcionesServidor() {
+        ConfiguracionModel configuracion = ConfiguracionModel.getInstance();
+        VistaOpcionesServidorWeb dialogNuevoServidor = new
+                VistaOpcionesServidorWeb(controllerPrincipal.getFramePrincipal(),
+                configuracion);
+        
+        dialogNuevoServidor.setVisible(true);
+        
+        if(dialogNuevoServidor.getAction() == dialogNuevoServidor.ACEPTAR) {
+            int numPoolSockets = dialogNuevoServidor.getNumPoolSockets();
+            int timeKeepAlive = dialogNuevoServidor.getTimeKeepAlive();
+            
+            configuracion.updateKeelAliveTimeout(timeKeepAlive);
+            configuracion.updateNumPoolSockets(numPoolSockets);
+            
+            JOptionPane.showMessageDialog(controllerPrincipal.getFramePrincipal(),
+                "Para que los cambios sean efectivos debe reiniciar la aplicación", 
+                "Cambios guardados",
+                JOptionPane.WARNING_MESSAGE);
         }
     }
 }

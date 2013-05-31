@@ -24,6 +24,11 @@ public class JTextFieldNumerico extends JTextField {
         addKeyListener(new EscuchadorTeclas());
     }
     
+    public JTextFieldNumerico(String valor) {
+        super(valor);
+        addKeyListener(new EscuchadorTeclas());
+    }
+    
     private class EscuchadorTeclas implements KeyListener {
         @Override
         public void keyTyped(KeyEvent e) {

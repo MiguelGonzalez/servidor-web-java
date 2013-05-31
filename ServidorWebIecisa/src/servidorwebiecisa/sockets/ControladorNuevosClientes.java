@@ -23,6 +23,7 @@ public class ControladorNuevosClientes extends Thread {
 
     private ServerSocket skServer;
     private ExecutorService executorServiceServer;
+    private ControladorPeticionesCliente controladorCliente;
     private ConfiguracionModel config = ConfiguracionModel.getInstance();
     
     private ServidorModel servidor;
@@ -41,9 +42,9 @@ public class ControladorNuevosClientes extends Thread {
         while(servidor.isCorriendo()) {
             try {
                 Socket skClient = skServer.accept();
-                skClient.setSoTimeout(config.getKeepAliveTimeout());
+                skClient.setSoTimeout(config.getKeepAliveTimeoutInMillis());
                 
-                ControladorPeticionesCliente controladorCliente =
+                controladorCliente =
                         new ControladorPeticionesCliente(servidor, skClient);
                 
                 executorServiceServer.execute(controladorCliente);
@@ -59,6 +60,9 @@ public class ControladorNuevosClientes extends Thread {
     }
     
     public void pararServidorWeb() {
+        System.out.println("Servidor parado");
+        
+        controladorCliente.dejarDeEscucharPeticiones();
         servidor.setCorriendo(false);
         
         try {
