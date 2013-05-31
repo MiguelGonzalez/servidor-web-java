@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <configuracion>
 <numPoolSockets>32</numPoolSockets>
-<keepAliveTimeOut>120</keepAliveTimeOut>
+<keepAliveTimeOut>20</keepAliveTimeOut>
 <servidores>
 <servidor>
 <port>9090</port>
@@ -12,6 +12,12 @@
 <servidor>
 <port>8080</port>
 <path>C:/Users/paracaidista/Desktop/PaginaNormal/</path>
+<pathRelativeServicio/>
+<classServicio/>
+</servidor>
+<servidor>
+<port>7070</port>
+<path>C:\Servidor Web - Miguel Gonzalez Gomez\Paginas demo\Pagina estática</path>
 <pathRelativeServicio/>
 <classServicio/>
 </servidor>

@@ -77,6 +77,10 @@ public class HttpOutputStream {
     }
     
     public final void servirEstatico(File fileEstatico) {
+        if(isCarpeta(fileEstatico)) {
+            fileEstatico = buscarIndexEnCarpeta(fileEstatico);
+        }
+        
         if(existeRecursoSolicitado(fileEstatico)) {
             writeResponse(
                     getContenidoPagina(fileEstatico),
@@ -86,6 +90,22 @@ public class HttpOutputStream {
                     getBytes();
             writeError(error404);
         }
+    }
+    
+    private boolean isCarpeta(File file) {
+        return file.isDirectory();
+    }
+    
+    private File buscarIndexEnCarpeta(File file) {
+        if(new File(file, "index.html").exists()) {
+            file = new File(file, "index.html");
+        }
+        
+        if(new File(file, "index.htm").exists()) {
+            file = new File(file, "index.htm");
+        }
+        
+        return file;
     }
     
     private byte[] getContenidoPagina(File fileEstatico) {

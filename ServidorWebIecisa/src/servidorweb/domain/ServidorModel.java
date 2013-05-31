@@ -20,7 +20,6 @@ public class ServidorModel {
     
     private boolean corriendo;
     
-    
     public ServidorModel(int port, String path,
             String pathRelativeServicio, String classServicio) {
         this.port = port;

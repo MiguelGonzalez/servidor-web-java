@@ -18,13 +18,6 @@ public class ConstruyeCabecera  {
     }
     
     private String formatearRecursoSolicitado(String recursoSolicitado) {
-        if(recursoSolicitado.equals("/")) {
-            recursoSolicitado = "/index.htm";
-        }
-        if(recursoSolicitado.endsWith("/")) {
-            recursoSolicitado += "index.htm";
-        }
-        
         return recursoSolicitado;
     }
     

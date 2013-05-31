@@ -51,12 +51,14 @@ public class ControladorNuevosClientes extends Thread {
     }
     
     public void iniciarServidorWeb() {
+        MainServidor.log.info("Servidor iniciado: " + servidor.getPath());
+        
         servidor.setCorriendo(true);
         start();
     }
     
     public void pararServidorWeb() {
-        System.out.println("Servidor parado");
+        MainServidor.log.info("Servidor parado: " + servidor.getPath());
         
         controladorCliente.dejarDeEscucharPeticiones();
         servidor.setCorriendo(false);
