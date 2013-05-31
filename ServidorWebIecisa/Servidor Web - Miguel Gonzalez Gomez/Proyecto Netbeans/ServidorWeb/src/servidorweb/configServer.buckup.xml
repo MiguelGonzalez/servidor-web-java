@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<configuracion>
+    <numPoolSockets>32</numPoolSockets>
+    
+    <keepAliveTimeOut>60</keepAliveTimeOut>
+    
+    <servidores>
+        
+        <servidor>
+            <port>9090</port>
+            <path>C:/PaginaNoticias/</path>
+            <pathRelativeServicio>admin/</pathRelativeServicio>
+            <classServicio>servidorwebiecisa.servidorWeb.ServidorWebNoticias</classServicio>
+        </servidor>
+        
+        <servidor>
+            <port>8080</port>
+            <path>C:/PaginaPrueba/</path>
+        </servidor>
+    </servidores>
+</configuracion>
