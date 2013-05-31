@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<configuracion>
+<numPoolSockets>32</numPoolSockets>
+<keepAliveTimeOut>120</keepAliveTimeOut>
+<servidores>
+<servidor>
+<port>9090</port>
+<path>C:/Users/paracaidista/Desktop/PaginaNoticias/</path>
+<pathRelativeServicio>admin</pathRelativeServicio>
+<classServicio>servidorweb.servidorWeb.ServidorWebNoticias</classServicio>
+</servidor>
+<servidor>
+<port>8080</port>
+<path>C:/Users/paracaidista/Desktop/PaginaNormal/</path>
+<pathRelativeServicio/>
+<classServicio/>
+</servidor>
+</servidores>
+</configuracion>
